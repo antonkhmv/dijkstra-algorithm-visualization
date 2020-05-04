@@ -1,0 +1,297 @@
+﻿<Window x:Class="Dijkstra_Algorithm_Visualization.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Dijkstra_Algorithm_Visualization"
+        mc:Ignorable="d"
+        Loaded="Window_Loaded" KeyDown="Window_KeyDown"
+        ResizeMode="CanMinimize"
+        Title="Dijkstra Algorithm" Height="826.125" Background="#F8F8F8">
+
+    <Window.Resources>
+        <Style x:Key="DisableSelection" TargetType="DataGridCell">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        </Style>
+        <local:SumConverter x:Key="converter"/>
+    </Window.Resources>
+
+    <Window.Style>
+        <Style TargetType="{x:Type Window}">
+            <Setter Property="Width">
+                <Setter.Value>
+                    <Binding Path="Debug_Width" Converter="{StaticResource converter}"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Style>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <!--Main Body-->
+            <RowDefinition Height="680"/>
+            <!--Footer-->
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <!--MainBody-->
+            <ColumnDefinition/>
+            <!--Adjacent Nodes-->
+            <ColumnDefinition Width="297"/>
+            <!--SideBar-->
+            <ColumnDefinition Width="253"/>
+        </Grid.ColumnDefinitions>
+
+        <!--#region Header-->
+        <Border Grid.Row="0" Grid.ColumnSpan="3" Background="#F0F0F0" BorderBrush="LightGray" BorderThickness="0 0 0 2"  Panel.ZIndex="1000" Margin="0,0,0,1">
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <!--Switch Buttons-->
+                        <ColumnDefinition Width="85"/>
+                        <ColumnDefinition Width="95"/>
+                        <ColumnDefinition Width="78"/>
+                        <!--Action Buttons-->
+                        <ColumnDefinition Width="142"/>
+                        <ColumnDefinition Width="190"/>
+                        <ColumnDefinition Width="144"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="48"/>
+                    </Grid.RowDefinitions>
+
+                    <Button Style = "{StaticResource SwitchButtonSelected}" Click="SwitchButton_Click" Grid.Column="0" Name="startButton">Start</Button>
+                    <Button Style = "{StaticResource SwitchButton}" Click="SwitchButton_Click" Grid.Column="1">Draw Graph</Button>
+                    <Button Style = "{StaticResource SwitchButton}" Click="SwitchButton_Click" Grid.Column="2">Delete</Button>
+                    <Button Style = "{StaticResource SwitchButton}" Click="SwitchButton_Click" Grid.Column="3">Change Edge Weight</Button>
+
+                    <Border Grid.Column="4" BorderThickness="1,0,1,0" BorderBrush="LightGray">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="97"/>
+                                <ColumnDefinition Width="55"/>
+                                <ColumnDefinition Width="50"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Margin="13,17,4,-4"><Run Text="Selected Node"/></TextBlock>
+                            <TextBox Text="{Binding Path=SelectedNode, Mode=TwoWay}" Grid.Column="1" Margin="6,15,4,13" Background="GhostWhite"/>
+                            <Button Grid.Column="2" Margin="0,15,19,13" HorizontalAlignment="Right" Width="27">Go</Button>
+
+                        </Grid>
+                    </Border>
+                </Grid>
+            </StackPanel>
+        </Border>
+        <!--#endregion-->
+
+        <!--#region Footer-->
+        <Border Padding="10 0 10 0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Panel.ZIndex="1000"
+            Background="#F0F0F0" BorderBrush="LightGray" BorderThickness="0 2 0 0">
+            <StackPanel>
+                <!--Animation Speed Controls-->
+                <Grid Height="56">
+                    <Grid.RowDefinitions>
+                        <!--Controls-->
+                        <RowDefinition Height="45"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <!--Buttons-->
+                        <ColumnDefinition Width="35"/>
+                        <ColumnDefinition Width="35"/>
+                        <ColumnDefinition Width="35"/>
+                        <ColumnDefinition Width="35"/>
+                        <ColumnDefinition Width="35"/>
+                        <!--Slider-->
+                        <ColumnDefinition Width="418"/>
+                        <ColumnDefinition Width="194"/>
+                    </Grid.ColumnDefinitions>
+                    <!--Step Direction-->
+                    <Button Style="{StaticResource HoverButton}" x:Name="AutoBackward" Grid.Column="0" Height="22" VerticalAlignment="Top" Margin="4,17,5,0" >&lt;&lt;</Button>
+                    <Button Style="{StaticResource HoverButton}" x:Name="Backward"     Grid.Column="1" Click="Backward_Click" Margin="4,17,4,6" >&lt;</Button>
+                    <Button Style="{StaticResource HoverButton}" x:Name="Stop"         Grid.Column="2" Margin="4,17,4,6" >⬛</Button>
+                    <Button Style="{StaticResource HoverButton}" x:Name="Forward"      Grid.Column="3" Click="Forward_Click" Margin="4,17,5,6">&gt;</Button>
+                    <Button Style="{StaticResource HoverButton}" x:Name="AutoForward"  Grid.Column="4" Margin="4,17,4,6" >&gt;&gt;</Button>
+                    <!--Speed Slider-->
+                    <Slider x:Name="frameSlider" Grid.Column="5"  Value="{Binding Path=FrameSlider, Mode=TwoWay}" Margin="34,17,37,6" />
+
+                    <TextBlock Grid.Column="5" Name="IteratorText" Text="{Binding Path=Iterator}" Grid.ColumnSpan="2" Margin="396,17,22,-17"/>
+
+                </Grid>
+            </StackPanel>
+        </Border>
+        <!--#endregion-->
+
+        <!--#region SideBar-->
+        <Border Padding="15 0 15 0" Grid.Row="1" Grid.Column="2"  Panel.ZIndex="1000"
+            Background="#F0F0F0" BorderBrush="LightGray" BorderThickness="2 0 0 0">
+            <StackPanel>
+                <Button Style = "{StaticResource HoverButton}" Click="RemoveAllButton_Click" Margin="0 10 " Height ="21">Remove All</Button>
+                <ComboBox x:Name="fileName" Margin="0 0 0 5" SelectedIndex="0" ItemsSource="{Binding Files,
+                    RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Mode=OneWay}"></ComboBox>
+                <!--Save & Load-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Style="{StaticResource HoverButton}" Click="SaveButton_Click" Margin="0,5,5,5" Height ="21">Save</Button>
+                    <Button Grid.Column ="1" Style="{StaticResource HoverButton}" Click="LoadButton_Click" Margin="5,5,0,5" Height ="21">Load</Button>
+                </Grid>
+                <!--Error message-->
+                <TextBlock x:Name="errorMessage" Foreground="Red"/>
+                <!--Add new file-->
+                <Grid Margin="0,5,0,0">
+                    <TextBox x:Name="newFileName" Style="{StaticResource TextBoxTxtFiles}"/>
+                    <TextBlock HorizontalAlignment="Right" Margin="0 0 5 0">.grp</TextBlock>
+                </Grid>
+                <Button Style = "{StaticResource HoverButton}" Click="AddNewFileButton_Click" Margin="0,10,0,0" Height ="21">Add New File</Button>
+                <CheckBox Margin="10,10,0,0"  IsChecked="{Binding Path=IsDistanceEuclidean, Mode=TwoWay}">
+                    <TextBlock>
+                        Weight is determined only by <LineBreak/>
+                        length vector
+                    </TextBlock>
+                </CheckBox>
+                <CheckBox Margin="10,10,0,0"  IsChecked="{Binding Path=IsIndexTextVisible, Mode=TwoWay}">
+                    <TextBlock>
+                        Show Nodes' indexes
+                    </TextBlock>
+                </CheckBox>
+                <CheckBox Margin="10,10,0,0"  IsChecked="{Binding Path=IsNodeTextIndex, Mode=TwoWay}">
+                    <TextBlock>
+                        Node Text is index
+                    </TextBlock>
+                </CheckBox>
+            </StackPanel>
+        </Border>
+        <!--#endregion-->
+
+        <!--#region Main Body-->
+        <Border Grid.Row="1" Grid.Column="0">
+            <!--Grid for gradient glow-->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="10"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="10"/>
+                </Grid.RowDefinitions>
+
+                <!--Canvas for drawing the graph-->
+                <Border Grid.Row="0" Grid.Column="0" MouseDown="Border_MouseDown" x:Name="canvasBorder"
+                        MouseMove="Border_MouseMove" MouseUp="Border_MouseUp">
+                    <Canvas x:Name="graphCanvas" Background="Transparent">
+                        <Path x:Name="previewArrow" Canvas.ZIndex="100000"/>
+                    </Canvas>
+                </Border>
+
+                <!--#region Gradient glow-->
+                <Border Grid.Column="1" Grid.Row="0">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="Transparent" Offset="0"/>
+                            <GradientStop Color="LightGray" Offset="1.46"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                </Border>
+
+                <Border Grid.Column="0" Grid.Row="1">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="Transparent" Offset="0"/>
+                            <GradientStop Color="LightGray" Offset="1.46"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                </Border>
+
+                <Border Grid.Column="1" Grid.Row="1">
+                    <Polygon Points="0,0 0,10 10,10">
+                        <Polygon.Fill>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Color="Transparent" Offset="0"/>
+                                <GradientStop Color="LightGray" Offset="1.46"/>
+                            </LinearGradientBrush>
+                        </Polygon.Fill>
+                    </Polygon>
+                </Border>
+
+                <Border Grid.Column="1" Grid.Row="1">
+                    <Polygon Points="0,0 10,0 10,10">
+                        <Polygon.Fill>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Color="Transparent" Offset="0"/>
+                                <GradientStop Color="LightGray" Offset="1.46"/>
+                            </LinearGradientBrush>
+                        </Polygon.Fill>
+                    </Polygon>
+                </Border>
+
+                <!--#endregion-->
+            </Grid>
+        </Border>
+
+        <!-- Debug Adjacency list-->
+        <Border Grid.Row="1" Grid.Column="1"  Panel.ZIndex="1000"
+            Background="WhiteSmoke"  BorderBrush="LightGray" BorderThickness="2 0 0 0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Column="0" Padding="3 2 3 2" BorderThickness="0 0 1.5 1.5" BorderBrush="LightGray">
+                        <TextBlock Text="ID"  FontSize="13"/>
+                    </Border>
+                    <Border Grid.Column="1" Padding="3 2 3 2" BorderThickness="0 0 0 1.5" BorderBrush="LightGray">
+                        <TextBlock Text="Adjacent Nodes"  FontSize="13"/>
+                    </Border>
+                </Grid>
+
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <ItemsControl 
+                            VirtualizingStackPanel.IsVirtualizing="True" 
+                            ScrollViewer.CanContentScroll="True" ItemsSource="{Binding Adjacent}">
+                        <!-- Row template -->
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="30"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Grid.Column="0" Padding="3 2 3 2" BorderThickness="0 0 1.5 1.5" BorderBrush="LightGray">
+                                        <TextBlock Text="{Binding Id}"/>
+                                    </Border>
+                                    <Border Grid.Column="1" Padding="3 2 3 2" BorderThickness="0 0 0 1.5" BorderBrush="LightGray">
+                                        <TextBlock Text="{Binding AdjacentNodes}"/>
+                                    </Border>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+
+                        <!-- Only visualize when on screen -->
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+        <!--#endregion-->
+    </Grid>
+</Window>

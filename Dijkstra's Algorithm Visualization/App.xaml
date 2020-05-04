@@ -1,0 +1,19 @@
+﻿<Application x:Class="Dijkstra_Algorithm_Visualization.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Dijkstra_Algorithm_Visualization"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- Order is important - higher-level styles first -->
+                <ResourceDictionary Source="ControlStyles\Buttons.xaml" />
+                <ResourceDictionary Source="ControlStyles\TextBoxes.xaml" />
+                
+            </ResourceDictionary.MergedDictionaries>
+            
+        </ResourceDictionary>
+
+    </Application.Resources>
+</Application>
