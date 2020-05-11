@@ -34,10 +34,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -57,11 +61,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="ControlStyles\TextBoxes.xaml">
+    <Page Include="XAML Control Styles\Brushes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XAML Control Styles\ListBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ControlStyles\Buttons.xaml">
+    <Page Include="XAML Control Styles\TextBlocks.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="XAML Control Styles\TextBoxes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="XAML Control Styles\Buttons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -69,6 +85,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="ControlEvents\Footer\AutoMove.cs" />
+    <Compile Include="ControlEvents\Footer\ChangeDescription.cs" />
+    <Compile Include="ControlEvents\Footer\MoveCode.cs" />
+    <Compile Include="ControlEvents\Footer\PlayerSwitchButton_Click.cs" />
+    <Compile Include="ControlEvents\Header\SetWeightButton_Click.cs" />
+    <Compile Include="ControlEvents\Sidebar\SidebarSwitch_Click.cs" />
+    <Compile Include="ControlEvents\Sidebar\RemoveButton_Click.cs" />
+    <Compile Include="Strategies\SelectStrategy\SelectStrategy.cs" />
+    <Compile Include="Strategies\StartStrategy\AlgorithmExecution.cs" />
+    <Compile Include="Tables\FileSelectionTable.cs" />
     <Compile Include="Algorithm\AlgorithmN^2.cs" />
     <Compile Include="Algorithm\MoveBack.cs" />
     <Compile Include="Algorithm\MoveForward.cs" />
@@ -83,27 +109,28 @@
     <Compile Include="Data IO\GetFromDrawing.cs" />
     <Compile Include="Data IO\Graph.cs" />
     <Compile Include="Data IO\LoadFromFile.cs" />
+    <Compile Include="Data IO\GetFileNameFromPath.cs" />
     <Compile Include="Data IO\RefreshOptions.cs" />
     <Compile Include="Data IO\SaveAsFile.cs" />
-    <Compile Include="ControlEvents\Sidebar\AddNewFileButton_Click.cs" />
+    <Compile Include="ControlEvents\Sidebar\SaveAsNewFileButton_Click.cs" />
     <Compile Include="ControlEvents\Sidebar\LoadButton_Click.cs" />
     <Compile Include="ControlEvents\Sidebar\SaveButton_Click.cs" />
     <Compile Include="ControlEvents\Header\StartButton_Click.cs" />
     <Compile Include="ControlEvents\Sidebar\RemoveAllButton_Click.cs" />
-    <Compile Include="Graph Drawing\Graph Control\AddEdge.cs" />
-    <Compile Include="Graph Drawing\Graph Control\MakeDouble.cs" />
-    <Compile Include="Graph Drawing\Graph Control\RemoveAllNodes.cs" />
-    <Compile Include="Graph Drawing\Strategies\DeleteStrategy\MouseDown.cs" />
-    <Compile Include="Graph Drawing\Strategies\DrawingStrategy\KeyDown.cs" />
-    <Compile Include="Graph Drawing\Strategies\DrawingStrategy\MouseDown.cs" />
-    <Compile Include="Graph Drawing\Strategies\DrawingStrategy\MouseUp.cs" />
-    <Compile Include="Graph Drawing\Strategies\DrawingStrategy\MouseMove.cs" />
-    <Compile Include="Graph Drawing\Strategies\StartStrategy\StartStrategy.cs" />
-    <Compile Include="Graph Drawing\Strategies\Strategy.cs" />
-    <Compile Include="Graph Drawing\Strategies\SelectStrategy\SelectStrategy.cs" />
-    <Compile Include="AdjacencyTable.cs" />
-    <Compile Include="Graph Drawing\Utility\ChangeNodeTextVisibility.cs" />
-    <Compile Include="Graph Drawing\Utility\ChangeNodeText.cs" />
+    <Compile Include="Graph Drawing\Graph Manipulation\AddEdge.cs" />
+    <Compile Include="Graph Drawing\Graph Manipulation\MakeDouble.cs" />
+    <Compile Include="Graph Drawing\Graph Manipulation\RemoveAllNodes.cs" />
+    <Compile Include="Strategies\DeleteStrategy\MouseDown.cs" />
+    <Compile Include="Strategies\DrawingStrategy\KeyDown.cs" />
+    <Compile Include="Strategies\DrawingStrategy\MouseDown.cs" />
+    <Compile Include="Strategies\DrawingStrategy\MouseUp.cs" />
+    <Compile Include="Strategies\DrawingStrategy\MouseMove.cs" />
+    <Compile Include="Strategies\StartStrategy\StartStrategy.cs" />
+    <Compile Include="Strategies\Strategy.cs" />
+    <Compile Include="Strategies\ChangeEdgeWeightStrategy\ChangeEdgeWeightStartegy.cs" />
+    <Compile Include="Tables\NodeDistanceTable.cs" />
+    <Compile Include="Graph Drawing\Utility\ClearAllNodesAndEdges.cs" />
+    <Compile Include="Graph Drawing\Utility\SelectNode.cs" />
     <Compile Include="Graph Drawing\Utility\UpdateAllWeightText.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -112,12 +139,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControlEvents\WindowEvents.cs" />
-    <Compile Include="Graph Drawing\GraphDrawing.cs" />
+    <Compile Include="Strategies\DrawingStrategy\GraphDrawing.cs" />
     <Compile Include="Graph Drawing\Utility\FindArrowInRange.cs" />
-    <Compile Include="Graph Drawing\Graph Control\AddNode.cs" />
-    <Compile Include="Graph Drawing\Graph Control\MoveArrow.cs" />
-    <Compile Include="Graph Drawing\Graph Control\RemoveEdge.cs" />
-    <Compile Include="Graph Drawing\Graph Control\RemoveNode.cs" />
+    <Compile Include="Graph Drawing\Graph Manipulation\AddNode.cs" />
+    <Compile Include="Graph Drawing\Graph Manipulation\MoveArrow.cs" />
+    <Compile Include="Graph Drawing\Graph Manipulation\RemoveEdge.cs" />
+    <Compile Include="Graph Drawing\Graph Manipulation\RemoveNode.cs" />
     <Compile Include="Graph Drawing\Utility\FindNodeInRange.cs" />
     <Compile Include="ControlEvents\StrategyEvents.cs" />
     <Compile Include="ControlEvents\Header\SwitchButton_Click.cs" />
@@ -152,6 +179,8 @@
       <Name>Drawing</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="favicon.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

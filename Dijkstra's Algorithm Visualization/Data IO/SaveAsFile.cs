@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization.Json;
 
 namespace Dijkstra_Algorithm_Visualization
 {
@@ -14,9 +15,9 @@ namespace Dijkstra_Algorithm_Visualization
         {
             try
             {
-                using (var sw = new FileStream(path, FileMode.Open))
+                using (var sw = new FileStream(path, FileMode.Create))
                 {
-                    binaryFormatter.Serialize(sw, this);
+                    serializer.WriteObject(sw, this); 
                 }
                 return true;
             }

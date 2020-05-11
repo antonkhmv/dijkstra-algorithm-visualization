@@ -8,13 +8,11 @@ namespace Dijkstra_Algorithm_Visualization
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
-            if (selectedNode != -1)
+            if (SelectedNode != -1)
             {
                 sequence = new Sequence(this);
                 sequence.BuildN2();
                 frameSlider.Value = 0;
-                OnPropertyChanged("Iterator");
-                OnPropertyChanged("MaxIndex");
             }
         }
     }

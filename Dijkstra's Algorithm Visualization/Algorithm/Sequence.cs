@@ -1,19 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Media;
+using System.Windows;
+using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Windows.Shell;
 
 namespace Dijkstra_Algorithm_Visualization
 {
 
     public partial class Sequence
     {
-        private EdgeCollection edges;
-        private MainWindow window;
-        private List<Node> nodes;
+        private readonly EdgeCollection edges;
+        private readonly MainWindow window;
+        private readonly List<Node> nodes;
 
-        public int Iterator { get; private set; } = 0;
-        public int MaxIndex { get; private set; } = 1;
+        private int iterator = 0;
+        public int Iterator {
+            get => iterator;
+            private set {
+                iterator = value;
+                // Update all the ui if the algorithm is moved
+                window.OnPropertyChanged("Iterator");
+                window.OnPropertyChanged("FrameSlider");
+                window.OnPropertyChanged("NodesDistanceTable");
+            }
+        }
 
+        private int maxIndex = 0;
+
+        public int MaxIndex { get => maxIndex; }
+        
         public bool IsFirst { get => Iterator == 0; }
         public bool IsLast { get => CurrentStep == steps.Count; }
 
@@ -50,13 +67,32 @@ namespace Dijkstra_Algorithm_Visualization
             this.window = window;
             used = new bool[nodes.Count];
             dist = new double[nodes.Count];
+            dist = new double[nodes.Count];
 
-            // This is just faster than Enumerable.Repeat(nodes.Count, true).ToArray();
             for (int i = 0; i < nodes.Count; ++i)
-            {
+            {                                     
                 used[i] = false;
                 dist[i] = double.PositiveInfinity;
+
+                double value = i == window.selectedNode ? 0.0 : double.PositiveInfinity;
+
+                nodes[i].DistanceText.Style = (Style)window.FindResource("DistanceText");
+                window.graphCanvas.Children.Add(nodes[i].DistanceText);
+                nodes[i].UpdateDistanceText(DoubleToString(value));
+                nodes[i].Distance = value;
             }
+        }
+
+        /// <summary>
+        /// Converts double to string and if the value is infinty, returns the symbol for inf.
+        /// </summary>
+        /// <returns></returns>
+        public static string DoubleToString(double value)
+        {
+            if (double.IsPositiveInfinity(value))
+                return "\u221E";
+            return value.ToString();
         }
     }
 }
+         

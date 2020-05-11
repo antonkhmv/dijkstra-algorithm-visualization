@@ -13,15 +13,28 @@ namespace Dijkstra_Algorithm_Visualization
         /// <summary>
         /// List of points of the nodes.
         /// </summary>
-        public List<Point> vertices;
+        public List<Point> Nodes;
 
         /// <summary>
         /// Adjacency list of pairs <node, weight> of the edges.
         /// </summary>
-        public List<List<Tuple<int, double>>> edges;
+        public List<List<AdjacentEdgeElement>> AdjacentEdges;
 
-        public int selectedNode = -1;
+        public int SelectedNode = -1;
+                    
+    }
 
-        public bool isDistanceEucledian = true;
+    /// <summary>
+    /// A class for saving elements of the adjacentEdges list as a json file.
+    /// </summary>
+    public struct AdjacentEdgeElement
+    {
+        public int Node;
+        public double? Weight;
+        public AdjacentEdgeElement(int node, double? weight)
+        {
+            Node = node;
+            Weight = weight;
+        }
     }
 }

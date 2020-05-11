@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="PseudocodeFontColor" Color="Black"/>
+    <SolidColorBrush x:Key="PseudocodeBackground" Color="#FEFEFE"/>
+    <SolidColorBrush x:Key="PseudocodeBackgroundSelected" Color="#444444"/>
+    <SolidColorBrush x:Key="BorderColor" Color="LightGray"/>
+    <SolidColorBrush x:Key="HeaderColor" Color="#EFEFEF"/>
+    <SolidColorBrush x:Key="Highlighted" Color="CornflowerBlue"/>
+    <SolidColorBrush x:Key="Comment" Color="LightCoral"/>
+</ResourceDictionary>

@@ -4,32 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Dijkstra_Algorithm_Visualization"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Loaded="Window_Loaded" KeyDown="Window_KeyDown"
-        ResizeMode="CanMinimize"
-        Title="Dijkstra Algorithm" Height="826.125" Background="#F8F8F8">
+        ResizeMode="CanMinimize" MouseDown="Window_MouseDown"
+        Title="Алгоритм Дейкстры" Height="822.375" Width="1366" Background="#F8F8F8">
 
-    <Window.Resources>
-        <Style x:Key="DisableSelection" TargetType="DataGridCell">
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Focusable" Value="False"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-        </Style>
-        <local:SumConverter x:Key="converter"/>
-    </Window.Resources>
-
-    <Window.Style>
-        <Style TargetType="{x:Type Window}">
-            <Setter Property="Width">
-                <Setter.Value>
-                    <Binding Path="Debug_Width" Converter="{StaticResource converter}"/>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Style>
-
-    <Grid>
+    <Grid x:Name="mainGrid" Focusable="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <!--Main Body-->
@@ -40,138 +21,105 @@
         <Grid.ColumnDefinitions>
             <!--MainBody-->
             <ColumnDefinition/>
-            <!--Adjacent Nodes-->
-            <ColumnDefinition Width="297"/>
             <!--SideBar-->
-            <ColumnDefinition Width="253"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-
-        <!--#region Header-->
-        <Border Grid.Row="0" Grid.ColumnSpan="3" Background="#F0F0F0" BorderBrush="LightGray" BorderThickness="0 0 0 2"  Panel.ZIndex="1000" Margin="0,0,0,1">
-            <StackPanel>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <!--Switch Buttons-->
-                        <ColumnDefinition Width="85"/>
-                        <ColumnDefinition Width="95"/>
-                        <ColumnDefinition Width="78"/>
-                        <!--Action Buttons-->
-                        <ColumnDefinition Width="142"/>
-                        <ColumnDefinition Width="190"/>
-                        <ColumnDefinition Width="144"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="48"/>
-                    </Grid.RowDefinitions>
-
-                    <Button Style = "{StaticResource SwitchButtonSelected}" Click="SwitchButton_Click" Grid.Column="0" Name="startButton">Start</Button>
-                    <Button Style = "{StaticResource SwitchButton}" Click="SwitchButton_Click" Grid.Column="1">Draw Graph</Button>
-                    <Button Style = "{StaticResource SwitchButton}" Click="SwitchButton_Click" Grid.Column="2">Delete</Button>
-                    <Button Style = "{StaticResource SwitchButton}" Click="SwitchButton_Click" Grid.Column="3">Change Edge Weight</Button>
-
-                    <Border Grid.Column="4" BorderThickness="1,0,1,0" BorderBrush="LightGray">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="97"/>
-                                <ColumnDefinition Width="55"/>
-                                <ColumnDefinition Width="50"/>
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock Grid.Column="0" Margin="13,17,4,-4"><Run Text="Selected Node"/></TextBlock>
-                            <TextBox Text="{Binding Path=SelectedNode, Mode=TwoWay}" Grid.Column="1" Margin="6,15,4,13" Background="GhostWhite"/>
-                            <Button Grid.Column="2" Margin="0,15,19,13" HorizontalAlignment="Right" Width="27">Go</Button>
-
-                        </Grid>
-                    </Border>
-                </Grid>
-            </StackPanel>
-        </Border>
-        <!--#endregion-->
 
         <!--#region Footer-->
         <Border Padding="10 0 10 0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Panel.ZIndex="1000"
-            Background="#F0F0F0" BorderBrush="LightGray" BorderThickness="0 2 0 0">
-            <StackPanel>
+            Background="{StaticResource HeaderColor}" BorderBrush="{StaticResource BorderColor}" BorderThickness="0 2 0 0">
+            <StackPanel Name="PlayerPanel" IsEnabled="False" Orientation="Horizontal">
                 <!--Animation Speed Controls-->
-                <Grid Height="56">
-                    <Grid.RowDefinitions>
-                        <!--Controls-->
-                        <RowDefinition Height="45"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <!--Buttons-->
-                        <ColumnDefinition Width="35"/>
-                        <ColumnDefinition Width="35"/>
-                        <ColumnDefinition Width="35"/>
-                        <ColumnDefinition Width="35"/>
-                        <ColumnDefinition Width="35"/>
-                        <!--Slider-->
-                        <ColumnDefinition Width="418"/>
-                        <ColumnDefinition Width="194"/>
-                    </Grid.ColumnDefinitions>
-                    <!--Step Direction-->
-                    <Button Style="{StaticResource HoverButton}" x:Name="AutoBackward" Grid.Column="0" Height="22" VerticalAlignment="Top" Margin="4,17,5,0" >&lt;&lt;</Button>
-                    <Button Style="{StaticResource HoverButton}" x:Name="Backward"     Grid.Column="1" Click="Backward_Click" Margin="4,17,4,6" >&lt;</Button>
-                    <Button Style="{StaticResource HoverButton}" x:Name="Stop"         Grid.Column="2" Margin="4,17,4,6" >⬛</Button>
-                    <Button Style="{StaticResource HoverButton}" x:Name="Forward"      Grid.Column="3" Click="Forward_Click" Margin="4,17,5,6">&gt;</Button>
-                    <Button Style="{StaticResource HoverButton}" x:Name="AutoForward"  Grid.Column="4" Margin="4,17,4,6" >&gt;&gt;</Button>
-                    <!--Speed Slider-->
-                    <Slider x:Name="frameSlider" Grid.Column="5"  Value="{Binding Path=FrameSlider, Mode=TwoWay}" Margin="34,17,37,6" />
 
-                    <TextBlock Grid.Column="5" Name="IteratorText" Text="{Binding Path=Iterator}" Grid.ColumnSpan="2" Margin="396,17,22,-17"/>
+                <!--Step Direction-->
+                <Button  Style="{StaticResource HoverButton}" x:Name="AutoBackward" Click="Plyer_SwitchButton" Margin="4,17,4,18"  Width="28">&lt;&lt;</Button>
+                <Button Style="{StaticResource HoverButton}" x:Name="Backward"      Click="Backward_Click"     Margin="4,17,4,18"  Width="28">&lt;</Button>
+                <Button Style="{StaticResource HoverButton}" x:Name="Stop"          Click="Plyer_SwitchButton" Margin="4,17,4,18"  Width="28" >⬛</Button>
+                <Button Style="{StaticResource HoverButton}" x:Name="Forward"       Click="Forward_Click"      Margin="4,17,5,18"  Width="28">&gt;</Button>
+                <Button Style="{StaticResource HoverButton}" x:Name="AutoForward"   Click="Plyer_SwitchButton" Margin="4,17,4,18"  Width="28">&gt;&gt;</Button>
 
-                </Grid>
-            </StackPanel>
-        </Border>
-        <!--#endregion-->
-
-        <!--#region SideBar-->
-        <Border Padding="15 0 15 0" Grid.Row="1" Grid.Column="2"  Panel.ZIndex="1000"
-            Background="#F0F0F0" BorderBrush="LightGray" BorderThickness="2 0 0 0">
-            <StackPanel>
-                <Button Style = "{StaticResource HoverButton}" Click="RemoveAllButton_Click" Margin="0 10 " Height ="21">Remove All</Button>
-                <ComboBox x:Name="fileName" Margin="0 0 0 5" SelectedIndex="0" ItemsSource="{Binding Files,
-                    RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Mode=OneWay}"></ComboBox>
-                <!--Save & Load-->
+                <!-- Sliders -->
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="500"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" Style="{StaticResource HoverButton}" Click="SaveButton_Click" Margin="0,5,5,5" Height ="21">Save</Button>
-                    <Button Grid.Column ="1" Style="{StaticResource HoverButton}" Click="LoadButton_Click" Margin="5,5,0,5" Height ="21">Load</Button>
+
+                    <StackPanel Grid.Column="0" Orientation="Horizontal">
+                        <!--Frame Slider-->
+                        <Slider x:Name="frameSlider" Value="{Binding Path=FrameSlider, Mode=TwoWay}" Margin="34,17,0,6" Width="387"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <!--Speed Slider-->
+                        <TextBlock Margin="10,17,0,6" Text="Скорость" />
+                        <Slider x:Name="speedSlider" Value="{Binding Speed, Mode=TwoWay}"  Width="100" Margin="20,17,0,0"/>
+                    </StackPanel>
                 </Grid>
-                <!--Error message-->
-                <TextBlock x:Name="errorMessage" Foreground="Red"/>
-                <!--Add new file-->
-                <Grid Margin="0,5,0,0">
-                    <TextBox x:Name="newFileName" Style="{StaticResource TextBoxTxtFiles}"/>
-                    <TextBlock HorizontalAlignment="Right" Margin="0 0 5 0">.grp</TextBlock>
-                </Grid>
-                <Button Style = "{StaticResource HoverButton}" Click="AddNewFileButton_Click" Margin="0,10,0,0" Height ="21">Add New File</Button>
-                <CheckBox Margin="10,10,0,0"  IsChecked="{Binding Path=IsDistanceEuclidean, Mode=TwoWay}">
-                    <TextBlock>
-                        Weight is determined only by <LineBreak/>
-                        length vector
-                    </TextBlock>
-                </CheckBox>
-                <CheckBox Margin="10,10,0,0"  IsChecked="{Binding Path=IsIndexTextVisible, Mode=TwoWay}">
-                    <TextBlock>
-                        Show Nodes' indexes
-                    </TextBlock>
-                </CheckBox>
-                <CheckBox Margin="10,10,0,0"  IsChecked="{Binding Path=IsNodeTextIndex, Mode=TwoWay}">
-                    <TextBlock>
-                        Node Text is index
-                    </TextBlock>
-                </CheckBox>
             </StackPanel>
         </Border>
         <!--#endregion-->
 
-        <!--#region Main Body-->
+        <!--#region Header-->
+        <Border Grid.Row="0" Grid.ColumnSpan="3" Background="{StaticResource HeaderColor}"
+            BorderBrush="{StaticResource BorderColor}" BorderThickness="0 0 0 2"  Panel.ZIndex="1000">
+            <StackPanel Orientation="Horizontal">
+
+                <!--Switch Buttons -->
+                <Button Style="{StaticResource SwitchButton}" Click="SwitchButton_Click" Grid.Column="0" Name="startButton" Width="79">Начать</Button>
+                <Button Style="{StaticResource SwitchButtonSelected}" Click="SwitchButton_Click" Grid.Column="1" Name="drawButton" Width="124">Строить граф</Button>
+                <Button Style="{StaticResource SwitchButton}" Click="SwitchButton_Click" Grid.Column="2"  Name="deleteButton"  Width="81">Удалять</Button>
+                <Button Style="{StaticResource SwitchButton}" Click="SwitchButton_Click" Grid.Column="3"  Name="selectButton"  Width="79">Выбрать</Button>
+                <Button Style="{StaticResource SwitchButton}" Click="SwitchButton_Click" Grid.Column="4"  Name="changeEdgeWeightButton" Width="158">Изменять вес ребер</Button>
+
+                <!--Set Edge Weight-->
+                <Border Visibility="Collapsed"  x:Name="changeEdgeWeightPanel" BorderBrush="LightGray" BorderThickness="2,0,0,0" Grid.Column="2" Panel.ZIndex="10000" Width="234">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="39"/>
+                                <ColumnDefinition Width="77"/>
+                                <ColumnDefinition Width="116"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Margin="12,16,7,15" Text="Вес: "/>
+                            <TextBox x:Name="SetWeightTextBox" 
+                                         Grid.Column="1" Margin="10,16,10,13" Background="White"/>
+                            <Button Grid.Column="2" Height="19" VerticalAlignment="Bottom" Margin="10,0,10,13"
+                                    Style = "{StaticResource HoverButton}" Name="SetWeightButton" Click="SetWeightButton_Click">Установить</Button>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!--Remove All Button-->
+                <Button Style="{StaticResource HoverButton}" BorderBrush="LightGray" Click="RemoveAllButton_Click" 
+                            BorderThickness="2,0,0,0" Grid.Column="0" Width="106" Visibility="{Binding ElementName=Sidebar, Path=Visibility}">Удалить все</Button>
+
+                <!--Selected Node-->
+                <Border BorderBrush="LightGray" BorderThickness="2,0,2,0" Grid.Column="1" Panel.ZIndex="10000" Width="201">
+                    <StackPanel x:Name="SelectNodePanel" Orientation="Horizontal" Margin="0,0,0,0">
+                        <Grid Width="200" Margin="0,2,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="125"/>
+                                <ColumnDefinition Width="80"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Height="16" Margin="10,15,79,16" Width="116" Grid.ColumnSpan="2">
+                                <Run Text="Выбранная вершина"/>
+                            </TextBlock>
+                            <TextBox Text="{Binding Path=SelectedNodeText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                  Background="White" Margin="15,13,19,14" Grid.Column="1"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+                <TextBlock Foreground="Red" Margin="20,17,0,17" Width="200" FontWeight="SemiBold"
+                           x:Name="SelectedNodeErrorMessage"/>
+            </StackPanel>
+        </Border>
+
+        <!--#endregion-->
+
+        <!--#region MainBody-->
         <Border Grid.Row="1" Grid.Column="0">
             <!--Grid for gradient glow-->
             <Grid>
@@ -187,14 +135,15 @@
 
                 <!--Canvas for drawing the graph-->
                 <Border Grid.Row="0" Grid.Column="0" MouseDown="Border_MouseDown" x:Name="canvasBorder"
-                        MouseMove="Border_MouseMove" MouseUp="Border_MouseUp">
+                        MouseMove="Border_MouseMove" MouseUp="Border_MouseUp" >
                     <Canvas x:Name="graphCanvas" Background="Transparent">
                         <Path x:Name="previewArrow" Canvas.ZIndex="100000"/>
                     </Canvas>
                 </Border>
 
+
                 <!--#region Gradient glow-->
-                <Border Grid.Column="1" Grid.Row="0">
+                <Border Grid.Column="1" Grid.Row="0" Visibility="{Binding ElementName=Sidebar, Path=Visibility}">
                     <Border.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                             <GradientStop Color="Transparent" Offset="0"/>
@@ -203,7 +152,7 @@
                     </Border.Background>
                 </Border>
 
-                <Border Grid.Column="0" Grid.Row="1">
+                <Border Grid.Column="0" Grid.Row="1" Visibility="{Binding ElementName=Sidebar, Path=Visibility}">
                     <Border.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                             <GradientStop Color="Transparent" Offset="0"/>
@@ -212,7 +161,7 @@
                     </Border.Background>
                 </Border>
 
-                <Border Grid.Column="1" Grid.Row="1">
+                <Border Grid.Column="1" Grid.Row="1" Visibility="{Binding ElementName=Sidebar, Path=Visibility}">
                     <Polygon Points="0,0 0,10 10,10">
                         <Polygon.Fill>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -223,7 +172,7 @@
                     </Polygon>
                 </Border>
 
-                <Border Grid.Column="1" Grid.Row="1">
+                <Border Grid.Column="1" Grid.Row="1" Visibility="{Binding ElementName=Sidebar, Path=Visibility}">
                     <Polygon Points="0,0 10,0 10,10">
                         <Polygon.Fill>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
@@ -233,65 +182,200 @@
                         </Polygon.Fill>
                     </Polygon>
                 </Border>
-
                 <!--#endregion-->
             </Grid>
         </Border>
+        <!--#endregion-->
 
-        <!-- Debug Adjacency list-->
-        <Border Grid.Row="1" Grid.Column="1"  Panel.ZIndex="1000"
-            Background="WhiteSmoke"  BorderBrush="LightGray" BorderThickness="2 0 0 0">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
+        <!-- SideBar visibility-->
+        <Border Visibility="Collapsed" Name="sidebarVisability"/>
 
-                <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="30"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Border Grid.Column="0" Padding="3 2 3 2" BorderThickness="0 0 1.5 1.5" BorderBrush="LightGray">
-                        <TextBlock Text="ID"  FontSize="13"/>
+        <!--#region SideBar-->
+        <Border Grid.Row="1" Grid.Column="2"  Panel.ZIndex="1000" VerticalAlignment="Top"
+            Background="#F0F0F0" BorderBrush="LightGray" BorderThickness="2 0 0 0" >
+            <StackPanel x:Name="Sidebar">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Buttons for choosing a panel to display -->
+                    <Border Grid.Row="0">
+                        <StackPanel Orientation="Horizontal">
+                            <Button Click="SidebarSwitch_Click" Style="{StaticResource SwitchButtonSelected}" Content="Примеры" Width="150" x:Name="examplesButton"/>
+                            <Button Click="SidebarSwitch_Click" Style="{StaticResource SwitchButton}" Content="Ззагрузка из файла" Width="150"/>
+                        </StackPanel>
                     </Border>
-                    <Border Grid.Column="1" Padding="3 2 3 2" BorderThickness="0 0 0 1.5" BorderBrush="LightGray">
-                        <TextBlock Text="Adjacent Nodes"  FontSize="13"/>
+
+                    <Border Padding="15,0" Grid.Row="1" Height="640">
+                        <StackPanel>
+                            <!--Examples Load Button-->
+                            <StackPanel Name="ExamplesPanel" Margin="0,10,0,0">
+                                <Button Grid.Column ="0" Style="{StaticResource HoverButton}" Click="LoadButton_Click" Margin="0,1,5,1" Height ="22" Grid.RowSpan="2">Загрузить пример</Button>
+                            </StackPanel>
+
+                            <!--#region Save & Load-->
+                            <StackPanel Name="SaveAndLoadPanel" Visibility="Collapsed">
+                                <Grid Height="24" Margin="0,10,0,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="5*"/>
+                                        <RowDefinition Height="19*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <!--Load Button-->
+                                    <Button Grid.Column ="0" Style="{StaticResource HoverButton}" Click="LoadButton_Click" Margin="0,1,5,1" Height ="22" Grid.RowSpan="2">Загрузить</Button>
+                                    <!--Save Button-->
+                                    <Button Grid.Column="1" Style="{StaticResource HoverButton}" Click="SaveButton_Click" Margin="5,1,0,1" Height ="22" Grid.RowSpan="2">Сохранить</Button>
+                                    <!--Add new file-->
+                                </Grid>
+                            </StackPanel>
+                            <!--#endregion-->
+
+                            <!--IO Error message-->
+                            <TextBlock x:Name="IOErrorMessage" Foreground="Red" FontWeight="SemiBold" Margin="0,10,0,0" Visibility="Collapsed"/>
+
+                            <!--#region File list-->
+                            <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="1" Margin="0,10,0,0" Background="White">
+                                <ScrollViewer  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                                    <StackPanel>
+                                        <TextBlock x:Name="noFilesMessage" Visibility="Collapsed" Margin="2">Файлы не найдены.</TextBlock>
+                                        <ListBox Background="White" Name="listBoxFiles"
+                                            Padding="0" BorderThickness="0" 
+                                     
+                                            ItemsSource="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:MainWindow}},
+                                            Path=DataContext.Files}">
+
+                                            <ListBox.ItemContainerStyle>
+                                                <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxOption}">
+                                                    <Setter Property="Padding" Value="0"/>
+                                                </Style>
+                                            </ListBox.ItemContainerStyle>
+                                        </ListBox>
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </Border>
+                            <!--#endregion-->
+
+                            <!-- #region Save and load. -->
+                            <StackPanel Visibility="{Binding ElementName=SaveAndLoadPanel, Path=Visibility}">
+                                <!--TextBox for loading and saving files. -->
+                                <Grid Margin="0,10,0,0">
+                                    <TextBox x:Name="newFileName"  VerticalAlignment="Center" FontSize="14" 
+                                    Style="{StaticResource TextBoxTxtFiles}"/>
+                                    <TextBlock HorizontalAlignment="Right" Margin="0,0,4,0" FontSize="13" >.json</TextBlock>
+                                </Grid>
+
+                                <Grid Height="24" Margin="0,10,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1.7*"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--Load Button-->
+                                    <Button Grid.Column="0" Style = "{StaticResource HoverButton}"  Margin="0,0,5,0"
+                                        Click="SaveAsNewFileButton_Click" Height ="24">Сохранить как новый файл</Button>
+                                    <!--Remove Button-->
+                                    <Button Grid.Column="1" Style = "{StaticResource HoverButton}" Margin="5,0,0,0"
+                                        Click="RemoveButton_Click"  Height ="24">Удалить</Button>
+
+                                </Grid>
+                            </StackPanel>
+                            <!--#endregion -->
+
+                        </StackPanel>
                     </Border>
                 </Grid>
 
-                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                    <ItemsControl 
-                            VirtualizingStackPanel.IsVirtualizing="True" 
-                            ScrollViewer.CanContentScroll="True" ItemsSource="{Binding Adjacent}">
-                        <!-- Row template -->
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="30"/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <Border Grid.Column="0" Padding="3 2 3 2" BorderThickness="0 0 1.5 1.5" BorderBrush="LightGray">
-                                        <TextBlock Text="{Binding Id}"/>
-                                    </Border>
-                                    <Border Grid.Column="1" Padding="3 2 3 2" BorderThickness="0 0 0 1.5" BorderBrush="LightGray">
-                                        <TextBlock Text="{Binding AdjacentNodes}"/>
-                                    </Border>
-                                </Grid>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-
-                        <!-- Only visualize when on screen -->
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                    </ItemsControl>
-                </ScrollViewer>
-            </Grid>
+            </StackPanel>
         </Border>
         <!--#endregion-->
+
+        <!--#region Pseudocode-->
+        <Border Name="Code"  Visibility="Collapsed" Grid.Row="1" Grid.Column="1"  Panel.ZIndex="1000" 
+             Background="{StaticResource PseudocodeBackground}" Height="250"
+                VerticalAlignment="Bottom" BorderBrush="{StaticResource BorderColor}" BorderThickness="2 2 2 0">
+            <StackPanel>
+
+                <Border Height="60" BorderBrush="{StaticResource BorderColor}" BorderThickness="0,0,0,2">
+                    <StackPanel>
+                        <TextBlock  Margin="10,5,10,0">
+                        Пояснение:
+                        </TextBlock>
+                        <TextBlock FontSize="13.5" Text="{Binding Description}" Margin="10,10,10,0"
+                                HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+
+                <TextBlock Margin="10,5,10,5">
+                    Псевдокод:
+                </TextBlock>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="15"/>
+                        <RowDefinition Height="23"/>
+                        <RowDefinition Height="15"/>
+                        <RowDefinition Height="34"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="15"/>
+                        <RowDefinition Height="44"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.Resources>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource CodeTextBlock}"/>
+                    </Grid.Resources>
+
+                    <TextBlock Grid.Row="0" Foreground="{StaticResource Comment}">
+                    // Для всех вершин
+                    </TextBlock>
+
+                    <TextBlock x:Name="codeStart" Style="{StaticResource CodeTextBlockSelected}" Grid.Row="1"
+                           VerticalAlignment="Center" >
+                    <Run Style="{StaticResource HighlightedCode}">foreach </Run>
+                    node <Run Style="{StaticResource HighlightedCode}">in</Run> nodes:
+                    </TextBlock>
+
+                    <TextBlock Grid.Row="2" Foreground="{StaticResource Comment}"> 
+                    <Run xml:space="preserve" Text="    "/>
+                    // Находим непосещенную вершину с наименьшим расстоянием
+                    </TextBlock>
+
+                    <TextBlock Grid.Row="3" x:Name="codeFindMin">
+                    <Run xml:space="preserve" Text="    "/>
+                    <Run Style="{StaticResource HighlightedCode}">foreach</Run>
+                    node <Run Style="{StaticResource HighlightedCode}">in</Run> nodes
+                                
+                    <Run Style="{StaticResource HighlightedCode}">where</Run>
+                    node <Run Style="{StaticResource HighlightedCode}">not in</Run>
+                    used:
+                    <LineBreak/> <Run xml:space="preserve" Text="        "/>
+                    minNode = min(minNode, node)
+                    </TextBlock>
+
+                    <TextBlock Grid.Row="5" Foreground="{StaticResource Comment}">    
+                    <Run xml:space="preserve" Text="    "/>
+                    // Релаксируем все ребра, выходящие из этой вершины
+                    </TextBlock>
+
+                    <TextBlock Grid.Row="6" x:Name="codeRelaxEdges"> 
+                    <Run xml:space="preserve" Text="    "/>
+                    <Run Style="{StaticResource HighlightedCode}">foreach</Run>
+                    edge <Run Style="{StaticResource HighlightedCode}">in</Run>
+                    AdjacentEdges(minNode): <LineBreak/>
+                    <Run xml:space="preserve" Text="        "/>
+                    dist[edge.to] = min(dist[edge.to], <LineBreak/>
+                    <Run xml:space="preserve" Text="                            "/>
+                    dist[minNode] + edge.weight)
+                    </TextBlock>
+
+                </Grid>
+            </StackPanel>
+        </Border>
+        <!--#endregion-->
+
     </Grid>
 </Window>

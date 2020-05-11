@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
+using System.Linq;
+using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace Dijkstra_Algorithm_Visualization
@@ -10,36 +13,12 @@ namespace Dijkstra_Algorithm_Visualization
     /// </summary>
     public partial class MainWindow : INotifyPropertyChanged
     {
-        enum WindowWidth
-        {
-            Laptop = 800,
-            Desktop = 1000
-        }
-
-        public static int Debug_Width { get => (int)WindowWidth.Desktop; set { } }
-
         public MainWindow()
         {
-            DataContext = this;
             InitializeComponent();
+            DataContext = this;
             RefreshOptions();
-           
-        }
-           
-    }
-
-    [ValueConversion(typeof(int), typeof(int))]
-    public class SumConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return (int)value + 566;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
+            // CultureInfo.CurrentCulture = new CultureInfo("us-EN");
         }
     }
-
 }

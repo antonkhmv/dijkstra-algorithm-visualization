@@ -7,10 +7,11 @@
 
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!-- Order is important - higher-level styles first -->
-                <ResourceDictionary Source="ControlStyles\Buttons.xaml" />
-                <ResourceDictionary Source="ControlStyles\TextBoxes.xaml" />
-                
+                <ResourceDictionary Source="XAML Control Styles\Brushes.xaml" />
+                <ResourceDictionary Source="XAML Control Styles\TextBlocks.xaml" />
+                <ResourceDictionary Source="XAML Control Styles\Buttons.xaml" />
+                <ResourceDictionary Source="XAML Control Styles\ListBox.xaml" />
+                <ResourceDictionary Source="XAML Control Styles\TextBoxes.xaml" />
             </ResourceDictionary.MergedDictionaries>
             
         </ResourceDictionary>

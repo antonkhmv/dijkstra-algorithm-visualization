@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 
 namespace Dijkstra_Algorithm_Visualization
 {
@@ -7,19 +8,32 @@ namespace Dijkstra_Algorithm_Visualization
         private void LoadButton_Click(object sender, RoutedEventArgs e)
         {
             var g = new Graph();
-            string path = fileName.Text;
+
+            var path = '.' + loadPath + listBoxFiles.SelectedItem as string;
+
             RefreshOptions();
-            if (!g.LoadFromFile(path))
+
+            // If the file is deleted or moved
+            if (IOErrorMessage.IsVisible)
             {
-                errorMessage.Text = "Error loading file.";
-                fileName.SelectedIndex = 0;
                 return;
             }
-            fileName.SelectedItem = path;
+
+            // If there's an error while loading a file, show an error message.
+            if (!g.LoadFromFile(path))
+            {
+                IOErrorMessage.Text = "Ошибка загрузки файла.";
+                IOErrorMessage.Visibility = Visibility.Visible;
+                return;
+            }
+
+            IOErrorMessage.Text = string.Empty;
+            IOErrorMessage.Visibility = Visibility.Collapsed; 
+
             RemoveAllNodes();
-            errorMessage.Text = string.Empty;
-            this.DrawFromGraph(g);
-            SwitchButton_Click(startButton, new RoutedEventArgs());
+            this.DrawFromGraph(g);  
+            
         }
     }
 }
+

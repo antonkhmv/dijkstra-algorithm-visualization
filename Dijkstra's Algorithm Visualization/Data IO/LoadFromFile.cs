@@ -1,11 +1,13 @@
 ﻿using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization.Json;
 
 namespace Dijkstra_Algorithm_Visualization
 {
     public partial class Graph
     {
-        static BinaryFormatter binaryFormatter = new BinaryFormatter();
+        static readonly DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Graph));
+
         /// <summary>
         /// Loads the graph from a file.
         /// </summary>
@@ -17,11 +19,10 @@ namespace Dijkstra_Algorithm_Visualization
             {
                 using (var sw = new FileStream(path, FileMode.Open))
                 {
-                    var graph = (Graph) binaryFormatter.Deserialize(sw);
-                    this.edges = graph.edges;
-                    this.vertices = graph.vertices;
-                    this.selectedNode = graph.selectedNode;
-                    this.isDistanceEucledian = graph.isDistanceEucledian;
+                    var graph = (Graph) serializer.ReadObject(sw);
+                    this.AdjacentEdges = graph.AdjacentEdges;
+                    this.Nodes = graph.Nodes;
+                    this.SelectedNode = graph.SelectedNode;
                 }
                 return true;
             }

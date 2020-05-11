@@ -13,22 +13,21 @@ namespace Dijkstra_Algorithm_Visualization
         /// <param name="nodes">List of nodes from the canvas.</param>
         public void GetFromDrawing(EdgeCollection edges, List<Node> nodes, int selectedNode)
         {
-            this.vertices = nodes.Select(x => x.Center).ToList();
-            this.edges = new List<List<Tuple<int, double>>>();
+            Nodes = nodes.Select(x => x.Center).ToList();
+            AdjacentEdges = new List<List<AdjacentEdgeElement>>();
             for (int i = 0; i < nodes.Count; ++i)
             {
-                this.edges.Add(new List<Tuple<int, double>>());
+                this.AdjacentEdges.Add(new List<AdjacentEdgeElement>());
             }
             foreach (var edge in edges)
             {
                 if (edge.Direction != DirectionType.Backward)
                 {
-                    this.edges[edge.First].Add(new Tuple<int, double>(edge.Second, 
-                        edge.WeightHasValue && !Edge.isDistanceEuclidean ? edge.Weight : double.NaN));
+                    this.AdjacentEdges[edge.First].Add(new AdjacentEdgeElement(edge.Second, 
+                        edge.WeightHasValue ? (double?) edge.Weight : null));
                 }
             }
-            this.selectedNode = selectedNode;
-            this.isDistanceEucledian = Edge.isDistanceEuclidean;
+            this.SelectedNode = selectedNode;
         }
     }
 }

@@ -7,19 +7,37 @@ namespace Dijkstra_Algorithm_Visualization
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             Graph g = new Graph();
-            g.GetFromDrawing(edges, nodes, selectedNode);
-            string path = fileName.Text;
+            g.GetFromDrawing(edges, nodes, SelectedNode);
+
+            var file = listBoxFiles.SelectedIndex;
+
             RefreshOptions();
+
+            // If file is deleted or moved
+            if (IOErrorMessage.IsVisible)
+            {
+                return;
+            }
+
+            listBoxFiles.SelectedIndex = file;
+
+            string path = string.Empty;
+
+            if (file >= 0)
+            {
+                // If there's an error while saving a file, show an error message.
+                path = '.' + loadPath + Files[file];
+            }
+
             if (!g.SaveAsFile(path))
             {
-                errorMessage.Text = "Error saving file.";
-                fileName.SelectedIndex = 0;
+                IOErrorMessage.Text = "Ошибка при сохранении файла.";
+                IOErrorMessage.Visibility = Visibility.Visible;
+                return;
             }
-            else
-            {
-                fileName.SelectedItem = path;
-                errorMessage.Text = string.Empty;
-            }
-        }  
+
+            IOErrorMessage.Text = string.Empty;
+            IOErrorMessage.Visibility = Visibility.Collapsed;
+        }
     }
 }

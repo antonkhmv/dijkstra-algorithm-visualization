@@ -16,8 +16,18 @@ namespace Dijkstra_Algorithm_Visualization
         {
             res = null;
             bool isFound = false;
-            foreach(var edge in edges) {
-                if (Geometry.IsInRangeOfLine(p, edge.FirstNode.Center, edge.SecondNode.Center, radius))
+            foreach (var edge in edges) {
+
+                Point begin = edge.FirstNode.Center;
+                Point end = edge.SecondNode.Center;
+
+                bool condition = Geometry.IsInRangeOfLine(p, begin, end, -radius, radius);
+
+                if (edge.Direction == DirectionType.Double) { 
+                    condition = Geometry.IsInRangeOfLine(p, begin, end, -1.7 * radius, 0);
+                }
+
+                if (condition)
                 {
                     isFound = true;
                     res = edge;

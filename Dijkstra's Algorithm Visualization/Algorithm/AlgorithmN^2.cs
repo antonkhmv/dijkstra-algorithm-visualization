@@ -4,26 +4,27 @@ namespace Dijkstra_Algorithm_Visualization
 {
     public partial class Sequence
     {
-        private bool[] used;
-        private double[] dist;
+        private readonly bool[] used;
+        private readonly double[] dist;
 
-        public List<(
-                    // Checked nodes
+        public List<(// Checked nodes
                     List<(int ind, int minNode)> checkedNodes, int minNode,
                     // Relaxed edges
-                    List<(int to, double wt)> relaxedEdges
+                    List<(int to, double weight)> relaxedEdges
             )> steps =
             new List<(List<(int node, int minNode)> checkedNodes, int minNode,
                 List<(int to, double wt)> relaxedEdges)>();
 
         private int minNode = -1;
 
+        public int complexity = 0;
+
         /// <summary>
         /// Save every step of the O(N^2) algorithm.
         /// </summary>
         public void BuildN2()
         {
-            int from = window.selectedNode;
+            int from = window.SelectedNode;
             dist[from] = 0.0;
 
             for (int i = 0; i < nodes.Count; ++i)
@@ -32,25 +33,21 @@ namespace Dijkstra_Algorithm_Visualization
                 var checkedNodes = FindMin();
                 var relaxedEdges = new List<(int ind, double wt)>();
 
-                if (minNode != -1)
+                if (minNode != -1 && dist[minNode] != double.PositiveInfinity)
                 {
                     for (int j = 0; j < edges[minNode].Count; ++j)
                     {
                         Edge edge = edges[minNode][j];
 
                         int u = edge.Second;
-                        if (!used[u] && edge.Direction != DirectionType.Backward)
+                        if (edge.Direction != DirectionType.Backward)
                         {
+                            // remember the edge distance before relaxing for reversing the algorithm.
+                            relaxedEdges.Add((u, dist[u]));
+
                             if (dist[minNode] + edge.Weight < dist[u])
                             {
                                 dist[u] = dist[minNode] + edge.Weight;
-                                // edge relaxed
-                                relaxedEdges.Add((u, dist[u]));
-                            }
-                            else
-                            {
-                                // edge not relaxed.
-                                relaxedEdges.Add((u, double.NaN));
                             }
                         }
                     }
@@ -58,7 +55,8 @@ namespace Dijkstra_Algorithm_Visualization
 
                 used[minNode] = true;
                 steps.Add((checkedNodes, minNode, relaxedEdges));
-                MaxIndex += checkedNodes.Count + relaxedEdges.Count;
+                complexity += checkedNodes.Count + relaxedEdges.Count;
+                maxIndex += checkedNodes.Count + System.Math.Max(1, relaxedEdges.Count);
             }
         }
 
@@ -68,6 +66,7 @@ namespace Dijkstra_Algorithm_Visualization
         private List<(int ind, int minNode)> FindMin()
         {
             var checkNodes = new List<(int ind, int minNode)>();
+            minNode = -1;
             for (int j = 0; j < nodes.Count; ++j)
             {
                 if (!used[j])

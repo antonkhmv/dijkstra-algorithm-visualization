@@ -8,8 +8,6 @@ namespace Dijkstra_Algorithm_Visualization
         {
             if (sequence!=null && !sequence.IsFirst)
                 sequence.MoveBack();
-            OnPropertyChanged("Iterator");
-            OnPropertyChanged("FrameSlider");
         }
     }
 }
