@@ -11,7 +11,7 @@
 
     <Grid>
 
-        <Grid x:Name="OverlayWindow" Panel.ZIndex="10000" Visibility="Visible">
+        <Grid x:Name="OverlayWindow" Panel.ZIndex="10000" Visibility="Collapsed">
             <Grid.Background>
                 <SolidColorBrush Color="Black" Opacity=".5"/>
             </Grid.Background>
@@ -35,7 +35,7 @@
                     </StackPanel>
                 </Border>
 
-                <Border Width="900" Background="White" Margin="187,46,187,35" Name="AlgorithmExplanationPanel" Visibility="Visible">
+                <Border Width="900" Background="White" Margin="187,46,187,35" Name="AlgorithmExplanationPanel" Visibility="Collapsed">
                     <StackPanel>
                         <TextBlock HorizontalAlignment="Center" FontSize="24" Margin="0,20">Об алгоритме.</TextBlock>
 
