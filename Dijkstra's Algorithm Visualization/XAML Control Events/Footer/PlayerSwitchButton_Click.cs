@@ -26,7 +26,7 @@ namespace Dijkstra_Algorithm_Visualization
 
         private void Plyer_SwitchButton(object sender, RoutedEventArgs e)
         {
-            var button = (Button)sender;
+            var button = (Button) sender;
 
             // If the same button is pressed, don't do anything.
             if (button == selectedPlayerButton)

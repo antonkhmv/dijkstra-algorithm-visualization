@@ -50,7 +50,7 @@ namespace Dijkstra_Algorithm_Visualization
 
                     // Params are expected to have the time complexity of the algorithm.
                     int complexity = (int)descriptionParams[0];
-                    Description = $"Алгоритм окончен. Посещено вершин и ребер: O(V^2 + E) = {complexity}";
+                    Description = $"Алгоритм окончен. Посещено вершин и ребер: O(|V|^2+|E|) = {complexity}";
                     break;
             }
         }

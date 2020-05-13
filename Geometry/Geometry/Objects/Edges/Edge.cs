@@ -121,11 +121,17 @@ namespace Dijkstra_Algorithm_Visualization
         public TextBlock WeightText { get; set; }
 
         /// <summary>
+        /// Text offset.
+        /// </summary>
+        public Size offset = new Size(0, 0);
+
+        /// <summary>
         /// Updates the position and the rotation of the wieght text.
         /// </summary>
         public void UpdateText()
         {
             WeightText.Text = Weight.ToString();
+            UpdateTextBoundries();
 
             double angle = Drawing.Geometry.GetAngle(SecondNode.Center, FirstNode.Center);
 
@@ -142,10 +148,10 @@ namespace Dijkstra_Algorithm_Visualization
             normalVec *= Direction == DirectionType.Double ? TextDoubleLength : TextSingleLength;
             Point p = normalVec + Drawing.Geometry.Midpoint(FirstNode.Center, SecondNode.Center);
 
-            WeightText.SetValue(Window.LeftProperty, System.Math.Round(p.X - WeightText.ActualWidth / 2.0, 1));
-            WeightText.SetValue(Window.TopProperty, System.Math.Round(p.Y - WeightText.ActualHeight/ 2.0, 1));
+            WeightText.SetValue(Window.LeftProperty, System.Math.Round(p.X - offset.Width / 2.0, 1));
+            WeightText.SetValue(Window.TopProperty, System.Math.Round(p.Y - offset.Height / 2.0, 1));
 
-            WeightText.RenderTransform = new RotateTransform(angle, WeightText.ActualWidth / 2.0, WeightText.ActualHeight / 2.0);
+            WeightText.RenderTransform = new RotateTransform(angle, offset.Width / 2.0, offset.Height / 2.0);
         }
 
         /// <summary>
@@ -162,15 +168,14 @@ namespace Dijkstra_Algorithm_Visualization
                 SecondEdge.WeightText.SetValue(UIElement.VisibilityProperty, Visibility.Visible);
             }
         }
-                    
+        
         /// <summary>
         /// Calculates the Boundries of the weight text
         /// </summary>
         public void UpdateTextBoundries()
         {
-            // Measures the size of the new textblock.
-            WeightText.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
-            WeightText.Arrange(new Rect(WeightText.DesiredSize));
+            // Measure the size of the new textblock.
+            offset = Drawing.Geometry.MeasureString(WeightText.Text, WeightText);
         }
 
         // Edges are used in the collection EdgeCollection, so it makes sence to give every edge a 
@@ -198,7 +203,6 @@ namespace Dijkstra_Algorithm_Visualization
 
             WeightText.Text = Weight.ToString();
 
-            UpdateTextBoundries();
             UpdateText();
         }
 

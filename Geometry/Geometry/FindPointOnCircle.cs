@@ -4,7 +4,7 @@ using Dijkstra_Algorithm_Visualization;
 
 namespace Drawing
 {
-    public partial class Arrows
+    public partial class Shapes
     {
         /// <summary>
         /// Finds a point on a circle with center "to" and diameter "diameter" which intersects the segment {from, to}
@@ -20,9 +20,11 @@ namespace Drawing
 
         /// <summary>
         /// Finds a point on a circle with center "to" and diameter "diameter" which intersects the segment {from, to}
+        /// And roatate that point by an angle "angle" 
         /// </summary>
         /// <param name="from">The first point of the segment.</param>
         /// <param name="to">The center of the circle and the second point of the segment.</param>
+        /// <param name="angle">The angle of rotation.</param>
         /// <returns></returns>
         public static Point FindPointOnCircle(Point from, Point to, 
             double angle)

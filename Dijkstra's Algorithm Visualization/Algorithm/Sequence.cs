@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Media;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -16,9 +17,11 @@ namespace Dijkstra_Algorithm_Visualization
         private readonly List<Node> nodes;
 
         private int iterator = 0;
-        public int Iterator {
+        public int Iterator
+        {
             get => iterator;
-            private set {
+            private set
+            {
                 iterator = value;
                 // Update all the ui if the algorithm is moved
                 window.OnPropertyChanged("Iterator");
@@ -30,11 +33,52 @@ namespace Dijkstra_Algorithm_Visualization
         private int maxIndex = 0;
 
         public int MaxIndex { get => maxIndex; }
-        
+
         public bool IsFirst { get => Iterator == 0; }
         public bool IsLast { get => CurrentStep == steps.Count; }
 
-        public void SetFrame(int index)
+        /// <summary>
+        /// Current task for setting the frame
+        /// </summary>
+        public Task setFrameTask;
+
+        /// <summary>
+        /// Requests to set the current frame of the algorithm to "index" 
+        /// (Since the player is implemented asyncronosly, the MoveNext() methods should not be called in parallel).
+        /// </summary>
+        /// <param name="index"></param>
+        public void SetFrameRequest(int index)
+        {
+            if (setFrameTask == null || setFrameTask.IsCompleted)
+            {
+                setFrameTask = SetFrame(index);
+            }
+        }
+
+        /// <summary>
+        /// Requests moving the algorithm forward
+        /// </summary>
+        public void MoveNextRequest()
+        {
+            if (!IsLast)
+                SetFrameRequest(Iterator + 1);
+        }
+
+        /// <summary>
+        /// Requests moving the algorithm back
+        /// </summary>
+        public void MoveBackRequest()
+        {
+            if (!IsFirst)
+                SetFrameRequest(Iterator - 1);
+        }
+
+        /// <summary>
+        /// This method should not be run directly as it will cause 
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        private async Task SetFrame(int index)
         {
             int diff = index - Iterator;
 
@@ -46,7 +90,7 @@ namespace Dijkstra_Algorithm_Visualization
                 }
             }
             else
-            {            
+            {
                 // if diff == 0, then loop will not run.
                 for (int i = 0; i < -diff; ++i)
                 {
@@ -70,7 +114,7 @@ namespace Dijkstra_Algorithm_Visualization
             dist = new double[nodes.Count];
 
             for (int i = 0; i < nodes.Count; ++i)
-            {                                     
+            {
                 used[i] = false;
                 dist[i] = double.PositiveInfinity;
 
@@ -95,4 +139,3 @@ namespace Dijkstra_Algorithm_Visualization
         }
     }
 }
-         

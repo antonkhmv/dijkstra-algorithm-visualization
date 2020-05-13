@@ -4,7 +4,6 @@
              xmlns:local="clr-namespace:Dijkstra_Algorithm_Visualization"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="XAML Control Styles\Brushes.xaml" />
@@ -13,8 +12,6 @@
                 <ResourceDictionary Source="XAML Control Styles\ListBox.xaml" />
                 <ResourceDictionary Source="XAML Control Styles\TextBoxes.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            
         </ResourceDictionary>
-
     </Application.Resources>
 </Application>

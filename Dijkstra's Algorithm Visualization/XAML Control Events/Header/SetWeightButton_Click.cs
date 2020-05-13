@@ -28,11 +28,6 @@ namespace Dijkstra_Algorithm_Visualization
                     edge.UpdateTextVisiblity();
 
                     edge.UpdateText();
-                    edge.UpdateTextBoundries();
-                    edge.UpdateText();
-
-                    opposite.UpdateText();
-                    opposite.UpdateTextBoundries();
                     opposite.UpdateText();
 
                 }

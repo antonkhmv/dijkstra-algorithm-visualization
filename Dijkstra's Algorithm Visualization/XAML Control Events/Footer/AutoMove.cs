@@ -24,7 +24,7 @@ namespace Dijkstra_Algorithm_Visualization
                     // Stop Executing the task.
                     break;
                 }
-                sequence.MoveNext();
+                sequence.MoveNextRequest();
                 // If the task is cancelled.
                 if (cancellaionToken.IsCancellationRequested || sequence.IsLast)
                 {
@@ -51,7 +51,7 @@ namespace Dijkstra_Algorithm_Visualization
                     // Stop Executing the task.
                     break;
                 }
-                sequence.MoveBack();
+                sequence.MoveBackRequest();
                 // If the task is cancelled.
                 if (cancellaionToken.IsCancellationRequested || sequence.IsFirst)
                 {
@@ -67,29 +67,33 @@ namespace Dijkstra_Algorithm_Visualization
         /// </summary>
         public void StopPlayer()
         {
-            // Request task cancellation.
-            try
+            // If a button is selected, disable the selection.
+            if (selectedPlayerButton != null)
             {
-                playerCTS.Cancel();
-                if (currentTask != null)
-                {
-                    currentTask.Wait(playerCTS.Token);
-                }
+                selectedPlayerButton.Style = this.FindResource("HoverButton") as Style;
+                selectedPlayerButton = null;
             }
-            catch (OperationCanceledException)
-            {
-                // If a button is selected, disable the selection.
-                if (selectedPlayerButton != null)
-                {
-                    selectedPlayerButton.Style = this.FindResource("HoverButton") as Style;
-                    selectedPlayerButton = null;
-                }
 
-                if (currentTask == null)
-                    return;
-                // Task cancelled.
-                playerCTS = new CancellationTokenSource();
-            }
+            if (currentTask == null || playerCTS == null || currentTask.IsCanceled)
+                return;
+
+            playerCTS.Cancel();
+
+            // Wait until the task finishes.
+            currentTask.ContinueWith(_ => { }, playerCTS.Token,
+                TaskContinuationOptions.LazyCancellation,
+                TaskScheduler.Default);
+
+            ResetPlayer();
+        }
+
+        /// <summary>
+        /// Resets the player to the default state.
+        /// </summary>
+        public void ResetPlayer()
+        {
+            currentTask = null;
+            playerCTS = new CancellationTokenSource();
         }
     }
 }

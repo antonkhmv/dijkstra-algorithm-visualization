@@ -4,7 +4,8 @@
     <SolidColorBrush x:Key="PseudocodeBackground" Color="#FEFEFE"/>
     <SolidColorBrush x:Key="PseudocodeBackgroundSelected" Color="#444444"/>
     <SolidColorBrush x:Key="BorderColor" Color="LightGray"/>
-    <SolidColorBrush x:Key="HeaderColor" Color="#EFEFEF"/>
+    <SolidColorBrush x:Key="HeaderColor" Color="#F2F2F2"/>
     <SolidColorBrush x:Key="Highlighted" Color="CornflowerBlue"/>
-    <SolidColorBrush x:Key="Comment" Color="LightCoral"/>
+    <SolidColorBrush x:Key="Comment" Color="Green"/>
+    <SolidColorBrush x:Key="DistanceColor" Color="Black"/>
 </ResourceDictionary>

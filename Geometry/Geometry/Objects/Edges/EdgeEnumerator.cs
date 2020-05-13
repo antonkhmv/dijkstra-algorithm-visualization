@@ -5,7 +5,7 @@ namespace Dijkstra_Algorithm_Visualization
 {
     public class EdgeEnumerator : IEnumerator<Edge>
     {
-        private List<Edge> edges;
+        private readonly List<Edge> edges;
 
         private int counter = 0;
 

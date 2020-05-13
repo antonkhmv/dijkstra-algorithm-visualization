@@ -13,7 +13,7 @@ namespace Dijkstra_Algorithm_Visualization
         {
             if (SelectedNode != -1)
             {
-                Shapes.SetCircleStyle(nodes[SelectedNode], Shapes.CircleStyle);
+                Shapes.SetCircleType(nodes[SelectedNode], CircleType.Standard);
                 SelectedNode = -1;
             }
         }
@@ -27,7 +27,7 @@ namespace Dijkstra_Algorithm_Visualization
                 return;
             UnselectCurrentNode();
             SelectedNode = node;
-            Shapes.SetCircleStyle(nodes[node], Shapes.CircleSelectedStyle);
+            Shapes.SetCircleType(nodes[node], CircleType.Selected);
         }
     }
 }

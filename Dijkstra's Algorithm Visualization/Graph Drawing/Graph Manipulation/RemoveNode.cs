@@ -29,6 +29,8 @@ namespace Dijkstra_Algorithm_Visualization
             for (int i = ind; i < nodes.Count; ++i)
             {
                 nodes[i].Index--;
+                // Update the index text of the nodes.
+                nodes[i].UpdateIndexText();
             }
 
             if (SelectedNode == ind)

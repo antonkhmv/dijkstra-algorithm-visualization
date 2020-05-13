@@ -9,6 +9,10 @@ namespace Dijkstra_Algorithm_Visualization
         {
             var g = new Graph();
 
+            // If nothing is selected, don't do anything.
+            if (listBoxFiles.SelectedIndex == -1)
+                return;
+
             var path = '.' + loadPath + listBoxFiles.SelectedItem as string;
 
             RefreshOptions();
@@ -31,8 +35,13 @@ namespace Dijkstra_Algorithm_Visualization
             IOErrorMessage.Visibility = Visibility.Collapsed; 
 
             RemoveAllNodes();
-            this.DrawFromGraph(g);  
             
+            // If the graph is not valid.
+            if (!this.DrawFromGraph(g))
+            {
+                IOErrorMessage.Text = "Ошибка при построении графа.";
+                IOErrorMessage.Visibility = Visibility.Visible;
+            }
         }
     }
 }

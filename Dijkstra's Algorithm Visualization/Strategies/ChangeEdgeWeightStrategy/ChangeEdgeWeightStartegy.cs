@@ -20,13 +20,13 @@ namespace Dijkstra_Algorithm_Visualization
                 if (window.selectedEdge != null)
                 {
                     // Unselected it.
-                    ArrowStyle.Normal.SetStlye(window.selectedEdge.Arrow);
+                    Shapes.SetArrowType(window.selectedEdge.Arrow, ArrowType.Standard);
                     window.selectedEdge = null;
                 }
 
                 if (edgeFound) {
                     // Select an edge.
-                    ArrowStyle.Selected.SetStlye(edge.Arrow);
+                    Shapes.SetArrowType(edge.Arrow, ArrowType.Selected);
                     window.selectedEdge = edge;
                 }
             }

@@ -1,47 +1,57 @@
-﻿using System.Windows.Media;
+﻿using System;
+using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace Drawing
 {
     /// <summary>
     /// Used to construct arrows from WPF Path objects.
     /// </summary>
-    public partial class ArrowStyle
+    public static partial class Shapes
     {
-        public double Thickness { get; set; }
-        public double HeadAngle { get; set; }
-        public double HeadLength { get; set; }
-        public Brush Fill { get; set; }
+        public static double Thickness = 1.7;
 
-        public static ArrowStyle Normal = new ArrowStyle()
+        public static double HeadAngle = Math.PI / 12.0;
+
+        public static double HeadLength = 10.0;
+
+        /// <summary>
+        /// Creates a Path object of an arrow.
+        /// </summary>
+        public static Path NewArrow() => new Path
         {
-            HeadLength = 10.0,
-            HeadAngle = System.Math.PI / 12.0,
-            Thickness = 1.7,
+            // Set the standard fill for the arrow.
             Fill = Brushes.Black
         };
-        
-        public static ArrowStyle Selected = new ArrowStyle()
-        {
-            HeadLength = 10.0,
-            HeadAngle = System.Math.PI / 12.0,
-            Thickness = 1.7,
-            Fill = new SolidColorBrush(Color.FromArgb(0xff, 0x32, 0x97, 0xFD))
-        };
 
-        public static ArrowStyle Relaxed = new ArrowStyle()
+        /// <summary>
+        /// Changes the current arrow type.
+        /// </summary>
+        public static void SetArrowType(Path arrow, ArrowType type)
         {
-            HeadLength = 10.0,
-            HeadAngle = System.Math.PI / 12.0,
-            Thickness = 1.7,
-            Fill = Brushes.OrangeRed
-        };
+            // Set the arrow fill according to the type.
+            switch (type)
+            {
+                case ArrowType.Standard:
+                    arrow.Fill = Brushes.Black;
+                    break;
 
-        public static ArrowStyle Waiting = new ArrowStyle()
-        {
-            HeadLength = 10.0,
-            HeadAngle = System.Math.PI / 12.0,
-            Thickness = 1.7,
-            Fill = Brushes.LightGray
-        };
+                case ArrowType.Selected:
+                    arrow.Fill = new SolidColorBrush(Color.FromArgb(0xff, 0x32, 0x97, 0xfd));
+                    break;
+
+                case ArrowType.Relaxed:
+                    arrow.Fill = Brushes.OrangeRed;
+                    break;
+
+                case ArrowType.NotRelaxed:
+                    arrow.Fill = Brushes.LightGray;
+                    break;
+
+                case ArrowType.Waiting:
+                    arrow.Fill = Brushes.LightGray;
+                    break;
+            }
+        }
     }
 }

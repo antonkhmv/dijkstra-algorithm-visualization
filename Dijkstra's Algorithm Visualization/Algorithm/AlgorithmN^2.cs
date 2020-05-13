@@ -17,6 +17,9 @@ namespace Dijkstra_Algorithm_Visualization
 
         private int minNode = -1;
 
+        /// <summary>
+        /// The total amount of steps the algorithm makes (relaxed edges + checked nodes).
+        /// </summary>
         public int complexity = 0;
 
         /// <summary>
@@ -42,7 +45,7 @@ namespace Dijkstra_Algorithm_Visualization
                         int u = edge.Second;
                         if (edge.Direction != DirectionType.Backward)
                         {
-                            // remember the edge distance before relaxing for reversing the algorithm.
+                            // Remember the edge distance before relaxing for reversing the algorithm.
                             relaxedEdges.Add((u, dist[u]));
 
                             if (dist[minNode] + edge.Weight < dist[u])

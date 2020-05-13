@@ -7,6 +7,11 @@ namespace Dijkstra_Algorithm_Visualization
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             Graph g = new Graph();
+
+            // If nothing is selected, don't do anything.
+            if (listBoxFiles.SelectedIndex == -1)
+                return;
+
             g.GetFromDrawing(edges, nodes, SelectedNode);
 
             var file = listBoxFiles.SelectedIndex;

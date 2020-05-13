@@ -85,14 +85,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="ControlEvents\Footer\AutoMove.cs" />
-    <Compile Include="ControlEvents\Footer\ChangeDescription.cs" />
-    <Compile Include="ControlEvents\Footer\MoveCode.cs" />
-    <Compile Include="ControlEvents\Footer\PlayerSwitchButton_Click.cs" />
-    <Compile Include="ControlEvents\Header\SetWeightButton_Click.cs" />
-    <Compile Include="ControlEvents\Sidebar\SidebarSwitch_Click.cs" />
-    <Compile Include="ControlEvents\Sidebar\RemoveButton_Click.cs" />
-    <Compile Include="Strategies\SelectStrategy\SelectStrategy.cs" />
+    <Compile Include="Graph Drawing\Utility\CheckForNegativeEdges.cs" />
+    <Compile Include="XAML Control Events\Footer\AutoMove.cs" />
+    <Compile Include="XAML Control Events\Footer\ChangeDescription.cs" />
+    <Compile Include="XAML Control Events\Footer\MoveCode.cs" />
+    <Compile Include="XAML Control Events\Footer\PlayerSwitchButton_Click.cs" />
+    <Compile Include="XAML Control Events\Header\SetWeightButton_Click.cs" />
+    <Compile Include="XAML Control Events\PopUpWindow\CloseButton_Click.cs" />
+    <Compile Include="XAML Control Events\PopUpWindow\OpenPopup_Click.cs" />
+    <Compile Include="XAML Control Events\Sidebar\SidebarSwitch_Click.cs" />
+    <Compile Include="XAML Control Events\Sidebar\RemoveButton_Click.cs" />
     <Compile Include="Strategies\StartStrategy\AlgorithmExecution.cs" />
     <Compile Include="Tables\FileSelectionTable.cs" />
     <Compile Include="Algorithm\AlgorithmN^2.cs" />
@@ -103,8 +105,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ControlEvents\Footer\BackwardButton_Click.cs" />
-    <Compile Include="ControlEvents\Footer\ForwardButton_Click.cs" />
+    <Compile Include="XAML Control Events\Footer\BackwardButton_Click.cs" />
+    <Compile Include="XAML Control Events\Footer\ForwardButton_Click.cs" />
     <Compile Include="Data IO\DrawFromGraph.cs" />
     <Compile Include="Data IO\GetFromDrawing.cs" />
     <Compile Include="Data IO\Graph.cs" />
@@ -112,11 +114,10 @@
     <Compile Include="Data IO\GetFileNameFromPath.cs" />
     <Compile Include="Data IO\RefreshOptions.cs" />
     <Compile Include="Data IO\SaveAsFile.cs" />
-    <Compile Include="ControlEvents\Sidebar\SaveAsNewFileButton_Click.cs" />
-    <Compile Include="ControlEvents\Sidebar\LoadButton_Click.cs" />
-    <Compile Include="ControlEvents\Sidebar\SaveButton_Click.cs" />
-    <Compile Include="ControlEvents\Header\StartButton_Click.cs" />
-    <Compile Include="ControlEvents\Sidebar\RemoveAllButton_Click.cs" />
+    <Compile Include="XAML Control Events\Sidebar\SaveAsNewFileButton_Click.cs" />
+    <Compile Include="XAML Control Events\Sidebar\LoadButton_Click.cs" />
+    <Compile Include="XAML Control Events\Sidebar\SaveButton_Click.cs" />
+    <Compile Include="XAML Control Events\Sidebar\RemoveAllButton_Click.cs" />
     <Compile Include="Graph Drawing\Graph Manipulation\AddEdge.cs" />
     <Compile Include="Graph Drawing\Graph Manipulation\MakeDouble.cs" />
     <Compile Include="Graph Drawing\Graph Manipulation\RemoveAllNodes.cs" />
@@ -136,9 +137,25 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="XAML Controls\AlgorithmDescription.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XAML Controls\DrawingExplanation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XAML Controls\Gradient.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XAML Controls\Legend.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ControlEvents\WindowEvents.cs" />
+    <Compile Include="XAML Control Events\WindowEvents.cs" />
     <Compile Include="Strategies\DrawingStrategy\GraphDrawing.cs" />
     <Compile Include="Graph Drawing\Utility\FindArrowInRange.cs" />
     <Compile Include="Graph Drawing\Graph Manipulation\AddNode.cs" />
@@ -146,8 +163,8 @@
     <Compile Include="Graph Drawing\Graph Manipulation\RemoveEdge.cs" />
     <Compile Include="Graph Drawing\Graph Manipulation\RemoveNode.cs" />
     <Compile Include="Graph Drawing\Utility\FindNodeInRange.cs" />
-    <Compile Include="ControlEvents\StrategyEvents.cs" />
-    <Compile Include="ControlEvents\Header\SwitchButton_Click.cs" />
+    <Compile Include="XAML Control Events\StrategyEvents.cs" />
+    <Compile Include="XAML Control Events\Header\StrategySwitchButton_Click.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

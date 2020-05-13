@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Drawing
 {
-    public partial class ArrowStyle
+    public static partial class Shapes
     {
         /// <summary>
         /// Creates a PathGeometry obeject of an arrow.
@@ -14,7 +14,7 @@ namespace Drawing
         /// <param name="end">The terminating point of the arrow.</param>
         /// <param name="angle">The arrow head angle.</param>
         /// <param name="headLength">The arrow head length.</param>
-        public PathGeometry StraightArrow(Point start, Point end)
+        public static PathGeometry StraightArrow(Point start, Point end)
         {
             // Create a PathFigure object of the arrow
             var arrow = new PathFigure() { StartPoint = start, IsClosed = false, IsFilled = true };
@@ -34,6 +34,7 @@ namespace Drawing
 
             var tVec = 0.5 * Thickness * normalVec / normalVec.Length;
 
+            // A list of all points of the arrow.
             var points = new Vector[]
             {
                 Geometry.ToVector(start) + tVec,

@@ -33,7 +33,7 @@ namespace Dijkstra_Algorithm_Visualization
                     // If there is an edge between the selected nodes in the opposite direction.
                     if (window.edges.Contains(node, newArrowNode) && window.edges[node, newArrowNode].Direction == DirectionType.Forward)
                     {
-                        window.MakeDouble(newArrowNode, node, ArrowStyle.Normal);
+                        window.MakeDouble(newArrowNode, node);
                     }
                     else
                     {

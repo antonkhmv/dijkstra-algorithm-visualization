@@ -39,7 +39,7 @@ namespace Dijkstra_Algorithm_Visualization
                     // Check that mouse is not inside the first node
                     if (!mouseOnNode || ind != newArrowNode)
                     {
-                        ArrowStyle.Normal.DrawArrow(window.previewArrow, newArrowPoint, p);
+                        Shapes.DrawArrow(window.previewArrow, newArrowPoint, p);
                     }
                     else
                     {

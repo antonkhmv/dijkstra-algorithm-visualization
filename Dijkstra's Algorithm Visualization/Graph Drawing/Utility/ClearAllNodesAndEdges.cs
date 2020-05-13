@@ -13,13 +13,13 @@ namespace Dijkstra_Algorithm_Visualization
         {
             foreach (var node in nodes)
             {
-                Shapes.SetCircleStyle(node, Shapes.CircleStyle);
-                node.UpdateText(node.Index.ToString());
+                Shapes.SetCircleType(node, CircleType.Standard);
+                node.UpdateIndexText();
                 graphCanvas.Children.Remove(node.DistanceText);
             }
             foreach (var edge in edges)
             {
-                ArrowStyle.Normal.SetStlye(edge.Arrow);
+                Shapes.SetArrowType(edge.Arrow, ArrowType.Standard);
             }
         }
     }

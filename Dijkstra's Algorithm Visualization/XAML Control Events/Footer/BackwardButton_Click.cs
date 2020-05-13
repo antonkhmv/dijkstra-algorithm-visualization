@@ -7,7 +7,7 @@ namespace Dijkstra_Algorithm_Visualization
         private void Backward_Click(object sender, RoutedEventArgs e)
         {
             if (sequence!=null && !sequence.IsFirst)
-                sequence.MoveBack();
+                sequence.MoveBackRequest();
         }
     }
 }

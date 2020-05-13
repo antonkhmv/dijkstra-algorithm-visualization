@@ -46,7 +46,7 @@ namespace Dijkstra_Algorithm_Visualization
 
                         // The preview arrow starts not on the edge of the circle, but on the center,
                         // so that when the cursor is inside the node, the arrow isn't visible.
-                        ArrowStyle.Normal.DrawArrow(window.previewArrow, newArrowPoint, p);
+                        Shapes.DrawArrow(window.previewArrow, newArrowPoint, p);
                         newArrowNode = nodeInRange;
                         addNewArrow = true;
 

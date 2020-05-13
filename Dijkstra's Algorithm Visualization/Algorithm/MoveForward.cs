@@ -1,5 +1,6 @@
 ﻿using Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Dijkstra_Algorithm_Visualization
 {
@@ -12,7 +13,7 @@ namespace Dijkstra_Algorithm_Visualization
         /// <summary>
         /// Moves the algorithm one step forward.
         /// </summary>    
-        public void MoveNext()
+        private void MoveNext()
         {
             var step = steps[CurrentStep];
 
@@ -22,7 +23,7 @@ namespace Dijkstra_Algorithm_Visualization
                 var node = step.checkedNodes[CurrentCheckedIndex];
 
                 // Set this node as the one that is being checked
-                Shapes.SetCircleStyle(nodes[node.ind], Shapes.CircleChecked);
+                Shapes.SetCircleType(nodes[node.ind], CircleType.Checked);
 
                 // Change description params: checkedDistance, minDistance
                 window.ChangeDescription(MainWindow.CodeBlock.FindMin,
@@ -33,50 +34,50 @@ namespace Dijkstra_Algorithm_Visualization
                     var prev = step.checkedNodes[CurrentCheckedIndex - 1];
                     // If last node is currently min, paint it as min.
                     if (node.minNode == prev.ind)
-                    {                                                                                                                                                                                                                                                                                                                                                                                                           
-                        Shapes.SetCircleStyle(nodes[prev.ind], Shapes.CircleMin);
+                    {
+                        Shapes.SetCircleType(nodes[prev.ind], CircleType.Min);
                     }
                     else
                     {
                         // If this node is min then clear the last min.
                         if (node.minNode == node.ind)
                         {
-                            Shapes.SetCircleStyle(nodes[prev.minNode], Shapes.CircleStyle);
+                            Shapes.SetCircleType(nodes[prev.minNode], CircleType.Standard);
                         }
-                        Shapes.SetCircleStyle(nodes[prev.ind], Shapes.CircleStyle);
+                        Shapes.SetCircleType(nodes[prev.ind], CircleType.Standard);
                     }
-                }              
+                }
                 else // if CurrentCheckedIndex == 0
                 {
                     // Move Pseudocode to findmin
                     window.SelectCodeBlock(MainWindow.CodeBlock.FindMin);
                 }
 
-                if (CurrentCheckedIndex == step.checkedNodes.Count - 1)                                                                                                                                                                                                                                                                                                                                                         
+                if (CurrentCheckedIndex == step.checkedNodes.Count - 1)
                 {
                     // Select all relaxed edges.
                     foreach (var (to, _) in step.relaxedEdges)
                     {
-                        ArrowStyle.Waiting.SetStlye(edges[step.minNode, to].Arrow);
+                        Shapes.SetArrowType(edges[step.minNode, to].Arrow, ArrowType.Waiting);
                     }
-                }                                                                                                                                                                                                                                                                                                                                                                                         
+                }
             }
             // Relaxed edges         
             else
             {
                 if (CurrentRelaxedIndex == 0)
                 {
-                    // Move Pseudocode to relxed edges.
-                    window.SelectCodeBlock(MainWindow.CodeBlock.RelaxedEdges);
-
                     if (step.checkedNodes.Count > 0)
                     {
                         // Make the last visited node black
-                        Shapes.SetCircleStyle(nodes[step.checkedNodes.Last().ind], Shapes.CircleStyle);
+                        Shapes.SetCircleType(nodes[step.checkedNodes.Last().ind], CircleType.Standard);
                     }
 
+                    // Move Pseudocode to relxed edges.
+                    window.SelectCodeBlock(MainWindow.CodeBlock.RelaxedEdges);
+
                     // The min node set to visited.
-                    Shapes.SetCircleStyle(nodes[step.minNode], Shapes.CircleVisitedStyle);
+                    Shapes.SetCircleType(nodes[step.minNode], CircleType.Visited);
                 }
 
                 if (step.relaxedEdges.Count != 0)
@@ -84,52 +85,44 @@ namespace Dijkstra_Algorithm_Visualization
                     var (to, _) = step.relaxedEdges[CurrentRelaxedIndex];
                     var edge = edges[step.minNode, to];
 
-                    ArrowStyle.Relaxed.SetStlye(edge.Arrow);
-
                     // params: dist, edgeWeight, nodeDist
                     window.ChangeDescription(MainWindow.CodeBlock.RelaxedEdges,
                         dist[step.minNode], edge.Weight, nodes[to].Distance);
-                                        
-                    // Distance after relaxing the edge.
-                    double value = System.Math.Min(dist[step.minNode] + edge.Weight,
-                        nodes[to].Distance);
+
+                    double value;
+
+                    if (dist[step.minNode] + edge.Weight < nodes[to].Distance)
+                    {
+                        value = dist[step.minNode] + edge.Weight;
+                        Shapes.SetArrowType(edge.Arrow, ArrowType.Relaxed);
+                    }
+                    else
+                    {
+                        value = nodes[to].Distance;
+                        Shapes.SetArrowType(edge.Arrow, ArrowType.NotRelaxed);
+                    }
 
                     nodes[to].Distance = value;
                     nodes[to].UpdateDistanceText(DoubleToString(value));
-
-                    // if this is the last relaxed edge.
-                    if (CurrentRelaxedIndex == step.relaxedEdges.Count-1)
-                    {
-                        // Move code to start
-                        window.SelectCodeBlock(MainWindow.CodeBlock.Start);
-                    }
                 }
-                else
-                {
-                    // if this list is empty, then do the next step of the algorithm.
-                    MoveIteratorForward();
 
-                    // Move code to start
-                    window.SelectCodeBlock(MainWindow.CodeBlock.Start);
-                    
-                    if (IsLast)
-                    {
-                        // params: compelxity
-                        window.ChangeDescription(MainWindow.CodeBlock.None,
-                            complexity);
-                        window.SelectCodeBlock(MainWindow.CodeBlock.None);
-                    }
-                    return;
-                }
             }
 
             MoveIteratorForward();
+
+            if (IsLast)
+            {
+                // params: compelxity
+                window.ChangeDescription(MainWindow.CodeBlock.None,
+                    complexity);
+                window.SelectCodeBlock(MainWindow.CodeBlock.None);
+            }
         }
 
         private void MoveIteratorForward()
         {
             var curr = steps[CurrentStep];
-            
+
             ++Iterator;
 
             // Check (findMin) is always first.

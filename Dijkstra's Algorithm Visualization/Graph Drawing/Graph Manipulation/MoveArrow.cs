@@ -20,8 +20,8 @@ namespace Dijkstra_Algorithm_Visualization
             edge.UpdateText();
             opposite.UpdateText();
 
-            ArrowStyle.Normal.UpdateEdgePosition(edge, edge.Direction == DirectionType.Double
-                ? ArrowType.TwoSingles : ArrowType.Single);
+            Shapes.UpdateArrowPosition(edge, edge.Direction == DirectionType.Double
+                ? ArrowDirection.Double : ArrowDirection.Single);
         }
     }
 }

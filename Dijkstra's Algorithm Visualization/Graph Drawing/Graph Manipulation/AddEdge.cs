@@ -6,8 +6,6 @@ namespace Dijkstra_Algorithm_Visualization
 {
     public partial class MainWindow : Window
     {
-        static Random rand = new Random();
-
         /// <summary>
         /// Add an edge to the canvas and to the collection.
         /// </summary> 
@@ -17,7 +15,7 @@ namespace Dijkstra_Algorithm_Visualization
         public void AddSingleEdge(int first, int second, double weight = double.NaN)
         {
             // Create a new arrow.
-            var newArrow = ArrowStyle.Normal.NewArrow();
+            var newArrow = Shapes.NewArrow();
 
             Edge edge = new Edge(nodes[first], nodes[second], DirectionType.Forward, newArrow, weight);
             edge.FirstEdge = edge;
@@ -31,7 +29,7 @@ namespace Dijkstra_Algorithm_Visualization
                 Opposite = edge
             };
             edge.Opposite = opposite;
-            ArrowStyle.Normal.UpdateEdgePosition(edge, ArrowType.Single);
+            Shapes.UpdateArrowPosition(edge, ArrowDirection.Single);
 
             this.graphCanvas.Children.Add(edge.Arrow);
             this.graphCanvas.Children.Add(edge.WeightText);

@@ -11,13 +11,13 @@ namespace Dijkstra_Algorithm_Visualization
         /// <param name="first">The first node of the edge.</param>
         /// <param name="second">The second node of the edge.</param>
         /// <param name="arrowStyle">The arrow style of the edge.</param>
-        public void MakeDouble(int first, int second, ArrowStyle arrowStyle)
+        public void MakeDouble(int first, int second)
         {
             var edge = edges[first, second].FirstEdge;
             var opposite = edge.SecondEdge;
 
-            opposite.Arrow = ArrowStyle.Normal.NewArrow();
-            arrowStyle.UpdateEdgePosition(edge, ArrowType.TwoSingles);
+            opposite.Arrow = Shapes.NewArrow();
+            Shapes.UpdateArrowPosition(edge, ArrowDirection.Double);
 
             if (opposite.Weight == edge.Weight)
             {

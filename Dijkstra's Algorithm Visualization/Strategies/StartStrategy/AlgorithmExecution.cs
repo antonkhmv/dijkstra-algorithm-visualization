@@ -7,6 +7,8 @@ namespace Dijkstra_Algorithm_Visualization
 {
     public partial class MainWindow : Window
     {
+        public Sequence sequence;
+
         /// <summary>
         /// Frame progression slider.
         /// </summary>
@@ -16,7 +18,7 @@ namespace Dijkstra_Algorithm_Visualization
             set
             {
                 if (sequence != null)
-                    sequence.SetFrame((int)Math.Round(value * sequence.MaxIndex / 10.0));
+                    sequence.SetFrameRequest((int)Math.Round(value * sequence.MaxIndex / 10.0));
                 OnPropertyChanged("FrameSlider");
             }
         }
