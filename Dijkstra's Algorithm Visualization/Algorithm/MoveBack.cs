@@ -57,7 +57,7 @@ namespace Dijkstra_Algorithm_Visualization
                     double value = weight;
 
                     nodes[to].Distance = value;
-                    nodes[to].UpdateDistanceText(DoubleToString(value));
+                    nodes[to].UpdateDistanceText();
                 }
             }
             // Checked nodes.

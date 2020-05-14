@@ -30,32 +30,12 @@
         <Setter Property="FontWeight" Value="DemiBold"/>
     </Style>
 
-    <Style x:Key="IndexText" TargetType="{x:Type Label}">
+    <Style TargetType="{x:Type TextBlock}" x:Key="DistanceText">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="Black"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Margin" Value="0,20,0,0"/>
         <Setter Property="Padding" Value="1,0,1,0"/>
-    </Style>
-
-    <Style TargetType="{x:Type Label}" x:Key="DistanceText" BasedOn="{StaticResource IndexText}">
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{StaticResource Highlighted}"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Label">
-                    <StackPanel Margin="0,40,0,0">
-                        <Label Background="{TemplateBinding Background}"
-                            Content="{TemplateBinding Content}">
-                            <Label.Style>
-                                <Style BasedOn="{StaticResource IndexText}" TargetType="Label">
-                                    <Setter Property="Foreground" Value="{StaticResource DistanceColor}"/>
-                                </Style>
-                            </Label.Style>
-                        </Label>
-                    </StackPanel>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
     </Style>
 
 </ResourceDictionary>

@@ -14,7 +14,6 @@ namespace Dijkstra_Algorithm_Visualization
             foreach (var node in nodes)
             {
                 Shapes.SetCircleType(node, CircleType.Standard);
-                node.UpdateIndexText();
                 graphCanvas.Children.Remove(node.DistanceText);
             }
             foreach (var edge in edges)

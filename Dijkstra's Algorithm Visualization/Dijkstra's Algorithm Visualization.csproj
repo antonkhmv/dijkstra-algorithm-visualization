@@ -90,10 +90,12 @@
     <Compile Include="XAML Control Events\Footer\ChangeDescription.cs" />
     <Compile Include="XAML Control Events\Footer\MoveCode.cs" />
     <Compile Include="XAML Control Events\Footer\PlayerSwitchButton_Click.cs" />
+    <Compile Include="XAML Control Events\Header\EndButton_Click.cs" />
     <Compile Include="XAML Control Events\Header\SetWeightButton_Click.cs" />
+    <Compile Include="XAML Control Events\Header\StartButton_Click.cs" />
     <Compile Include="XAML Control Events\PopUpWindow\CloseButton_Click.cs" />
     <Compile Include="XAML Control Events\PopUpWindow\OpenPopup_Click.cs" />
-    <Compile Include="XAML Control Events\Sidebar\SidebarSwitch_Click.cs" />
+    <Compile Include="XAML Control Events\Sidebar\SidebarSwitch_Checked.cs" />
     <Compile Include="XAML Control Events\Sidebar\RemoveButton_Click.cs" />
     <Compile Include="Strategies\StartStrategy\AlgorithmExecution.cs" />
     <Compile Include="Tables\FileSelectionTable.cs" />
@@ -129,7 +131,6 @@
     <Compile Include="Strategies\StartStrategy\StartStrategy.cs" />
     <Compile Include="Strategies\Strategy.cs" />
     <Compile Include="Strategies\ChangeEdgeWeightStrategy\ChangeEdgeWeightStartegy.cs" />
-    <Compile Include="Tables\NodeDistanceTable.cs" />
     <Compile Include="Graph Drawing\Utility\ClearAllNodesAndEdges.cs" />
     <Compile Include="Graph Drawing\Utility\SelectNode.cs" />
     <Compile Include="Graph Drawing\Utility\UpdateAllWeightText.cs" />
@@ -142,10 +143,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="XAML Controls\DrawingExplanation.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="XAML Controls\Gradient.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -164,7 +161,7 @@
     <Compile Include="Graph Drawing\Graph Manipulation\RemoveNode.cs" />
     <Compile Include="Graph Drawing\Utility\FindNodeInRange.cs" />
     <Compile Include="XAML Control Events\StrategyEvents.cs" />
-    <Compile Include="XAML Control Events\Header\StrategySwitchButton_Click.cs" />
+    <Compile Include="XAML Control Events\Header\StrategySwitchButton_Checked.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

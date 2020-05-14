@@ -50,7 +50,7 @@ namespace Dijkstra_Algorithm_Visualization
         /// </summary>
         public double Weight
         {
-            get => System.Math.Round(WeightHasValue ? 
+            get => System.Math.Round(WeightHasValue ?
                 weight : Drawing.Geometry.Distance(FirstNode.Center, SecondNode.Center) / UnitLenth, 1);
             set => weight = value;
         }
@@ -168,14 +168,21 @@ namespace Dijkstra_Algorithm_Visualization
                 SecondEdge.WeightText.SetValue(UIElement.VisibilityProperty, Visibility.Visible);
             }
         }
-        
+
         /// <summary>
         /// Calculates the Boundries of the weight text
         /// </summary>
         public void UpdateTextBoundries()
         {
             // Measure the size of the new textblock.
-            offset = Drawing.Geometry.MeasureString(WeightText.Text, WeightText);
+            offset = Drawing.Geometry.MeasureString(
+                WeightText.Text, 
+                new Typeface(
+                    WeightText.FontFamily,
+                    WeightText.FontStyle,
+                    WeightText.FontWeight,
+                    WeightText.FontStretch),
+                WeightText.FontSize);
         }
 
         // Edges are used in the collection EdgeCollection, so it makes sence to give every edge a 

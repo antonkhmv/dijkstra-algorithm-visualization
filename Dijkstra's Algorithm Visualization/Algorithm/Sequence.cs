@@ -120,22 +120,12 @@ namespace Dijkstra_Algorithm_Visualization
 
                 double value = i == window.selectedNode ? 0.0 : double.PositiveInfinity;
 
-                nodes[i].DistanceText.Style = (Style)window.FindResource("DistanceText");
                 window.graphCanvas.Children.Add(nodes[i].DistanceText);
-                nodes[i].UpdateDistanceText(DoubleToString(value));
                 nodes[i].Distance = value;
+                nodes[i].UpdateDistanceText();
+                nodes[i].UpdateDistanceText();
             }
         }
 
-        /// <summary>
-        /// Converts double to string and if the value is infinty, returns the symbol for inf.
-        /// </summary>
-        /// <returns></returns>
-        public static string DoubleToString(double value)
-        {
-            if (double.IsPositiveInfinity(value))
-                return "\u221E";
-            return value.ToString();
-        }
     }
 }

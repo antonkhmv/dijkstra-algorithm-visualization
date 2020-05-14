@@ -19,6 +19,9 @@ namespace Dijkstra_Algorithm_Visualization
         /// </summary>
         public void RefreshOptions()
         {
+            if (listBoxFiles == null)
+                return;
+
             int selectedFile = listBoxFiles.SelectedIndex;
             string selectedPath = listBoxFiles.SelectedItem as string;
             

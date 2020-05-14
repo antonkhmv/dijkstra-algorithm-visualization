@@ -37,7 +37,7 @@
                 <TextBlock LineHeight="18" Margin="20,15,20,3" VerticalAlignment="Center" FontSize="12.5" Width="256">
                     <Run Text="Создание вершин - с помощью "/><Run/><LineBreak/>
                     <Run Text="левой кнопки мыши (ЛКМ). (во "/><LineBreak/>
-                    <Run Text="вкладке &quot;Строить граф&quot;; необходимо"/><LineBreak/>
+                    <Run Text="вкладке &quot;Строить&quot;; необходимо"/><LineBreak/>
                     <Run Text="нажать на любое свободное место)"/><LineBreak/>
                 </TextBlock>
             </StackPanel>

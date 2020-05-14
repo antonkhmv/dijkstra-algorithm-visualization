@@ -13,12 +13,13 @@ namespace Dijkstra_Algorithm_Visualization
         /// </summary>
         public static double Diameter = 26.0;
                                                  
-        public Label IndexText { get; set; }
-        public Label DistanceText { get; set; }
+        public TextBlock IndexText { get; set; }
+        public TextBlock DistanceText { get; set; }
 
         public Ellipse Circle { get; set; }
 
         private int index;
+
         public int Index
         {
             get => index;
@@ -37,37 +38,54 @@ namespace Dijkstra_Algorithm_Visualization
         {
             string value = Index.ToString();
 
-            if (value == (string)IndexText.Content)
+            IndexText.SetValue(Window.LeftProperty,
+                (double)Circle.GetValue(Window.LeftProperty) + Diameter / 2.0 - IndexText.ActualWidth / 2.0);
+
+            IndexText.SetValue(Window.TopProperty,
+                (double)Circle.GetValue(Window.TopProperty) + Diameter / 2.0 - IndexText.ActualHeight / 2.0);
+
+            if (value == (string)IndexText.Text)
                 return;
 
             // Every time the text inside the node changes, update it.
-            IndexText.Content = value;
+            IndexText.Text = value;
 
             // Measures the size of the new textblock.
             IndexText.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
             IndexText.Arrange(new Rect(IndexText.DesiredSize));
 
-            IndexText.SetValue(Window.LeftProperty,
-                (double)Circle.GetValue(Window.LeftProperty) + Diameter / 2.0 - IndexText.ActualWidth / 2.0);
-            IndexText.SetValue(Window.TopProperty,
-                (double)Circle.GetValue(Window.TopProperty) + Diameter / 2.0 - IndexText.ActualHeight / 2.0);
         }
 
-        public void UpdateDistanceText(string value)
+        /// <summary>
+        /// Converts double to string and if the value is infinty, returns the symbol for inf.
+        /// </summary>
+        /// <returns></returns>
+        public static string DoubleToString(double value)
         {
-            if (value == (string)DistanceText.Content)
+            if (double.IsPositiveInfinity(value))
+                return "\u221E";
+            return value.ToString();
+        }
+
+        public void UpdateDistanceText()
+        {
+            string value = DoubleToString(Distance);
+
+            DistanceText.SetValue(Window.LeftProperty,
+                (double)Circle.GetValue(Window.LeftProperty) + Diameter / 2.0 - DistanceText.ActualWidth / 2.0);
+            DistanceText.SetValue(Window.TopProperty,
+                (double)Circle.GetValue(Window.TopProperty) + 25 + Diameter / 2.0 - DistanceText.ActualHeight / 2.0);
+
+            if (value == (string)DistanceText.Text)
                 return;
 
             // Every time the text inside the node changes, update it.
-            DistanceText.Content = value;
+            DistanceText.Text = value;
 
             // Measures the size of the new textblock.
             DistanceText.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
             DistanceText.Arrange(new Rect(DistanceText.DesiredSize));
-            DistanceText.SetValue(Window.LeftProperty,
-                (double)Circle.GetValue(Window.LeftProperty) + Diameter / 2.0 - DistanceText.ActualWidth / 2.0);
-            DistanceText.SetValue(Window.TopProperty,
-                (double)Circle.GetValue(Window.TopProperty) + Diameter / 2.0 - DistanceText.ActualHeight / 2.0);
+
         }
 
         /// <summary>
@@ -85,9 +103,14 @@ namespace Dijkstra_Algorithm_Visualization
             Circle.SetValue(Window.LeftProperty, x - Diameter / 2.0);
             Circle.SetValue(Window.TopProperty, y - Diameter / 2.0);
 
-            DistanceText = new Label();
+            DistanceText = new TextBlock()
+            {
+                Foreground = Brushes.Black,
+                FontWeight = FontWeights.SemiBold,
+                Padding = new Thickness(1, 0, 1, 0),
+            };
 
-            IndexText = new Label()
+            IndexText = new TextBlock()
             {
                 Foreground = Brushes.Black,
                 FontWeight = FontWeights.SemiBold,

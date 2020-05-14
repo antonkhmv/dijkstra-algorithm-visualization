@@ -28,7 +28,7 @@
         </Path>
         <TextBlock Canvas.Top="10" Canvas.Left="255"><Run Text="Ребро релаксировано"/></TextBlock>
         <TextBlock Canvas.Top="31" Canvas.Left="255">
-        <Run Text="Ребро ожидает релаксации или "/> <LineBreak/> <Run Text="Ребро не релаксировано"/></TextBlock>
+        <Run Text="Ребро ожидает "/><LineBreak/> <Run Text="релаксации или "/> <LineBreak/> <Run Text="Ребро не релаксировано"/></TextBlock>
     </Canvas>
 
 </ResourceDictionary>

@@ -6,12 +6,15 @@
         xmlns:local="clr-namespace:Dijkstra_Algorithm_Visualization"
         mc:Ignorable="d"
         Loaded="Window_Loaded" KeyDown="Window_KeyDown"
-        ResizeMode="CanMinimize" MouseDown="Window_MouseDown"
+        ResizeMode="CanMinimize" MouseDown="Window_MouseDown" 
         Title="Алгоритм Дейкстры" Height="820" Width="1280" Background="#F8F8F8">
 
-    <Grid>
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
 
-        <Grid x:Name="OverlayWindow" Panel.ZIndex="10000" Visibility="Collapsed">
+    <Grid>
+        <Grid x:Name="OverlayWindow" Panel.ZIndex="10000" Visibility="Collapsed" Grid.RowSpan="2">
             <Grid.Background>
                 <SolidColorBrush Color="Black" Opacity=".5"/>
             </Grid.Background>
@@ -47,26 +50,26 @@
             </Grid>
         </Grid>
 
-        <Grid x:Name="mainGrid">
+        <Grid x:Name="mainGrid" Grid.RowSpan="2">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="45"/>
                 <!--Main Body-->
-                <RowDefinition Height="680"/>
+                <RowDefinition Height="720"/>
                 <!--Footer-->
                 <RowDefinition Height="60"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <!--MainBody-->
-                <ColumnDefinition/>
                 <!--SideBar-->
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition/>
+                <!--MainBody-->
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
             <!--#region Footer-->
-            <Border Padding="10 0 10 0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Panel.ZIndex="1000"
-            Background="{StaticResource HeaderColor}" BorderBrush="{StaticResource BorderColor}" BorderThickness="0 2 0 0">
-                <StackPanel Name="PlayerPanel" IsEnabled="False" Orientation="Horizontal">
+            <Border Padding="10 0 10 0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Panel.ZIndex="1000" Visibility="{Binding ElementName=Code, Path=Visibility}"
+            Background="{StaticResource PlayerColor}" BorderBrush="{StaticResource BorderColor}" BorderThickness="0 2 0 0">
+                <StackPanel Name="PlayerPanel" Orientation="Horizontal">
                     <!--Animation Speed Controls-->
 
                     <!--Step Direction-->
@@ -98,217 +101,295 @@
             </Border>
             <!--#endregion-->
 
-            <!--#region Header-->
-            <Border Grid.Row="0" Grid.ColumnSpan="3" Background="{StaticResource HeaderColor}"
-            BorderBrush="{StaticResource BorderColor}" BorderThickness="0 0 0 2"  Panel.ZIndex="1000">
-                <StackPanel Orientation="Horizontal">
+            <!--#region Sidebar-->
 
-                    <!--Switch Buttons -->
-                    <Button Style="{StaticResource SwitchButton}" Click="StrategySwitchButton_Click" Grid.Column="0" Name="StartButton" Width="79">Начать</Button>
-                    <Button Style="{StaticResource SwitchButtonSelected}" Click="StrategySwitchButton_Click" Grid.Column="1" Name="DrawButton" Width="115">Строить граф</Button>
-                    <Button Style="{StaticResource SwitchButton}" Click="StrategySwitchButton_Click" Grid.Column="2"  Name="DeleteButton"  Width="81">Удалять</Button>
-                    <Button Style="{StaticResource SwitchButton}" Click="StrategySwitchButton_Click" Grid.Column="4"  Name="ChangeEdgeWeightButton" Width="124">Изменять вес ребер</Button>
+            <Border HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0" Background="#F5F5F5" Grid.RowSpan="2" Width="300" Name="SidebarPanel" Visibility="Visible"
+            BorderBrush="{StaticResource BorderColor}" BorderThickness="0,0,1,0"  Panel.ZIndex="1000">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
-                    <!--Set Edge Weight-->
-                    <Border Visibility="Collapsed"  x:Name="changeEdgeWeightPanel" BorderBrush="LightGray" BorderThickness="2,0,0,0" Grid.Column="2" Panel.ZIndex="10000" Width="234">
-                        <StackPanel>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="39"/>
-                                    <ColumnDefinition Width="77"/>
-                                    <ColumnDefinition Width="116"/>
-                                </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Vertical" Grid.Row="0" Height="747">
+                        <!--Start Buttons -->
+                        <ToggleButton IsChecked="True" BorderThickness="0" Height="35" Style="{StaticResource SwitchMenuListButton}" Name="StartMenuButton">Запутстить алгоритм</ToggleButton>
 
-                                <TextBlock Grid.Column="0" Margin="12,16,7,15" Text="Вес: "/>
-                                <TextBox x:Name="SetWeightTextBox" 
-                                         Grid.Column="1" Margin="10,16,10,13" Background="White"/>
-                                <Button Grid.Column="2" Height="19" VerticalAlignment="Bottom" Margin="10,0,10,13"
-                                    Style = "{StaticResource HoverButton}" Name="SetWeightButton" Click="SetWeightButton_Click">Установить</Button>
-                            </Grid>
-                        </StackPanel>
-                    </Border>
+                        <!--Selected Node-->
+                        <Border BorderBrush="LightGray" BorderThickness="0,0,0,1" Grid.Column="1" >
+                            <StackPanel x:Name="SelectNodePanel" Orientation="Vertical"  
+                                    Visibility="{Binding ElementName=StartMenuButton, Path=IsChecked,  Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <Grid HorizontalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="123"/>
+                                        <ColumnDefinition Width="82"/>
+                                        <ColumnDefinition Width="80"/>
+                                    </Grid.ColumnDefinitions>
 
-                    <!--Remove All Button-->
-                    <Button Style="{StaticResource HoverButton}" BorderBrush="LightGray" Click="RemoveAllButton_Click" x:Name="removeAllButton"
-                            BorderThickness="2,0,0,0" Grid.Column="0" Width="106">Удалить все</Button>
+                                    <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Height="18" Margin="10,12,79,12" Width="116" Grid.ColumnSpan="2">
+                                <Run Text="Выбраная вершина"/>
+                                    </TextBlock>
+                                    <TextBox Text="{Binding Path=SelectedNodeText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                  Background="White" Margin="10,12" Grid.Column="1"/>
+                                    <Button Grid.Column="2" BorderBrush="LightGray" BorderThickness="1" Click="StartButton_Click"
+                                            Style="{StaticResource HoverButton}" Name="StartButton" Margin="0,8">Начать</Button>
+                                </Grid>
 
-                    <!--Selected Node-->
-                    <Border BorderBrush="LightGray" BorderThickness="2,0,2,0" Grid.Column="1" Panel.ZIndex="10000" Width="201">
-                        <StackPanel x:Name="SelectNodePanel" Orientation="Horizontal" Margin="0,0,0,0">
-                            <Grid Width="200" Margin="0,2,0,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="125"/>
-                                    <ColumnDefinition Width="80"/>
-                                </Grid.ColumnDefinitions>
 
-                                <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Height="17" Margin="10,10,79,10" Width="116" Grid.ColumnSpan="2">
-                                <Run Text="Начальная вершина"/>
-                                </TextBlock>
-                                <TextBox Text="{Binding Path=SelectedNodeText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                  Background="White" Margin="15,12,19,12" Grid.Column="1"/>
-                            </Grid>
-                        </StackPanel>
-                    </Border>
 
-                    <Button Style="{StaticResource HoverButton}" BorderBrush="LightGray" Click="OpenPopup_Click" Name="DrawingExplanation"
-                            BorderThickness="0,0,2,0" Width="114" Visibility="{Binding ElementName=removeAllButton, Path=Visibility}">Как строить граф?</Button>
+                                <TextBlock Visibility="Collapsed" Foreground="Red" Margin="20,10,0,10" Width="200" FontWeight="SemiBold" 
+                                     x:Name="SelectedNodeErrorMessage"/>
 
-                    <Button Style="{StaticResource HoverButton}" BorderBrush="LightGray" Click="OpenPopup_Click" Name="AlgorithmExplanation"
-                            BorderThickness="0,0,2,0" Width="106">Об Алгоритме</Button>
+                            </StackPanel>
+                        </Border>
 
-                    <TextBlock Foreground="Red" Margin="20,14,0,10" Width="200" FontWeight="SemiBold"
-                           x:Name="SelectedNodeErrorMessage"/>
+                        <ToggleButton BorderThickness="0" IsChecked="False" Height="35" Style="{StaticResource SwitchMenuListButton}" Name="DrawMenuButton" 
+                                      >Строить граф</ToggleButton>
 
-                </StackPanel>
+
+                        <Border BorderBrush="LightGray" BorderThickness="0,0,0,1">
+                            <StackPanel Visibility="{Binding ElementName=DrawMenuButton, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <Border BorderBrush="LightGray" Margin="5" BorderThickness="1">
+                                    <StackPanel>
+                                        <ListBox Background="Transparent" Padding="0,0,0,5" BorderThickness="0">
+
+                                            <ListBox.ItemContainerStyle>
+                                                <Style TargetType="ListBoxItem">
+                                                    <Setter Property="Padding" Value="0"/>
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                                                <Border Name="Border" BorderThickness="1" Margin="5,5,5,0" BorderBrush="LightGray">
+                                                                    <ContentPresenter
+                                                                Content="{TemplateBinding Content}" >
+                                                                    </ContentPresenter>
+                                                                </Border>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </ListBox.ItemContainerStyle>
+
+
+                                            <ListBoxItem>
+                                                <ListBoxItem.Content>
+                                                    <!--Draw Button-->
+                                                    <RadioButton IsChecked="True"  Height="35" Style="{StaticResource SwitchMenuButton}" GroupName="StrategyButtons"
+                                                                Checked="StrategySwitchButton_Checked" Name="DrawButton" >Строить</RadioButton>
+                                                </ListBoxItem.Content>
+                                            </ListBoxItem>
+
+                                            <ListBoxItem>
+                                                <ListBoxItem.Content>
+                                                    <!-- Delete Button -->
+                                                    <RadioButton Height="35" Style="{StaticResource SwitchMenuButton}"  Checked="StrategySwitchButton_Checked"  
+                                                      Name="DeleteButton" GroupName="StrategyButtons">Удалять</RadioButton>
+                                                </ListBoxItem.Content>
+                                            </ListBoxItem>
+
+
+                                            <ListBoxItem>
+                                                <ListBoxItem.Content>
+                                                    <!--Change Edge Weight-->
+                                                    <RadioButton  Height="35" Style="{StaticResource SwitchMenuButton}"
+                                                         Name="ChangeEdgeWeightButton" GroupName="StrategyButtons"  Checked="StrategySwitchButton_Checked" >Изменять вес ребер</RadioButton>
+                                                </ListBoxItem.Content>
+                                            </ListBoxItem>
+                                        </ListBox>
+
+                                        <!--Set Edge Weight-->
+                                        <Border Visibility="{Binding ElementName=ChangeEdgeWeightButton, Path=IsChecked,  Converter={StaticResource BooleanToVisibilityConverter}}"
+                                                Padding="0,2" >
+                                            <StackPanel>
+                                                <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="39"/>
+                                                        <ColumnDefinition Width="67"/>
+                                                        <ColumnDefinition Width="126"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <TextBlock Grid.Column="0" Text="Вес: " Margin="0,4,0,-4"/>
+                                                    <TextBox x:Name="SetWeightTextBox" Grid.Column="1" Background="White" Margin="0,4,16,9"/>
+                                                    <Button Grid.Column="2" BorderBrush="LightGray"
+                                                        Style = "{StaticResource HoverButton}" Name="SetWeightButton" Click="SetWeightButton_Click" Height="25" VerticalAlignment="Top">Установить</Button>
+                                                </Grid>
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
+                                </Border>
+
+                                <!--Remove All Button-->
+                                <Button Margin="5,0" BorderThickness="1" BorderBrush="LightGray" Height="35" Style="{StaticResource HoverButton}" Click="RemoveAllButton_Click" x:Name="removeAllButton"
+                            Grid.Column="0">Удалить все</Button>
+
+                                <Button Margin="5" BorderThickness="1" BorderBrush="LightGray" Height="35" Style="{StaticResource HoverButton}" Click="OpenPopup_Click" Name="DrawingExplanation"
+                            >Как строить граф?</Button>
+
+                            </StackPanel>
+                        </Border>
+
+                        <ToggleButton IsChecked="True" BorderBrush="LightGray" BorderThickness="0,0,0,1" Height="35" 
+                                       Name="LoadMenuButton">
+                            <ToggleButton.Style>
+                                <Style TargetType="ToggleButton" BasedOn="{StaticResource SwitchMenuListButton}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsChecked" Value="True">
+                                            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                            <Setter Property="BorderBrush" Value="LightGray"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ToggleButton.Style>
+                            Примеры графов
+                        </ToggleButton>
+
+                        <!--#region Files -->
+                        <Grid>
+                            <Border Height="Auto">
+                                <StackPanel Visibility="{Binding ElementName=LoadMenuButton, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <!-- Buttons for choosing a panel to display -->
+                                        <Border Grid.Row="0" Margin="5,5,5,0">
+                                            <Grid  Background="{StaticResource HeaderColor}">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <Border Grid.Column="0" Margin="0,0,5,0">
+                                                    <Border BorderBrush="LightGray" BorderThickness="1"  VerticalAlignment="Center" >
+                                                        <RadioButton GroupName="FileMenu"   IsChecked="True"  Checked="SidebarSwitch_Checked" Style="{StaticResource SwitchMenuButton}" 
+                                                             Content="Примеры" x:Name="examplesButton" Height="30"/>
+                                                    </Border>
+                                                </Border>
+                                                <Border  Grid.Column="1" Margin="5,0,0,0">
+                                                    <Border BorderBrush="LightGray" BorderThickness="1"  VerticalAlignment="Center" Margin="0,0,1,0">
+                                                        <RadioButton GroupName="FileMenu" Checked="SidebarSwitch_Checked" Style="{StaticResource SwitchMenuButton}"
+                                                               BorderBrush="LightGray" Content="Загрузить из файлов" Height="30" Name="loadFilesButton"/>
+                                                    </Border>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+
+                                        <Border Grid.Row="1" Height="Auto" Background="#F5F5F5" Padding="7" Margin="5" BorderThickness="1" BorderBrush="LightGray">
+                                            <StackPanel>
+                                                <!--Examples Load Button-->
+                                                <StackPanel Visibility="{Binding ElementName=examplesButton, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                                    <Button BorderBrush="LightGray" BorderThickness="1" Grid.Column ="0" Style="{StaticResource HoverButton}" Click="LoadButton_Click" Height="30" >Загрузить пример</Button>
+                                                </StackPanel>
+
+                                                <!--#region Save & Load-->
+                                                <StackPanel  Visibility="{Binding ElementName=loadFilesButton, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                                    <Grid Height="30">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition/>
+                                                            <ColumnDefinition />
+                                                        </Grid.ColumnDefinitions>
+                                                        <!--Load Button-->
+                                                        <Button  BorderBrush="LightGray" Grid.Column ="0" Style="{StaticResource HoverButton}" Margin="0,0,5,0" Click="LoadButton_Click" Height ="28" Grid.RowSpan="2">Загрузить</Button>
+                                                        <!--Save Button-->
+                                                        <Button  BorderBrush="LightGray" Grid.Column="1" Style="{StaticResource HoverButton}" Margin="5,0,0,0" Click="SaveButton_Click" Height ="28" Grid.RowSpan="2">Сохранить</Button>
+                                                        <!--Add new file-->
+                                                    </Grid>
+                                                </StackPanel>
+                                                <!--#endregion-->
+
+                                                <!--IO Error message-->
+                                                <TextBlock x:Name="IOErrorMessage" Foreground="Red" FontWeight="SemiBold" Margin="0,10,0,0" Visibility="Collapsed"/>
+
+                                                <!--#region File list-->
+                                                <Border
+                                                Grid.Row="1" BorderBrush="LightGray" BorderThickness="1" Margin="0,10,0,0" Background="White">
+                                                    <ScrollViewer  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                                                >
+                                                        <StackPanel>
+                                                            <TextBlock x:Name="noFilesMessage" Visibility="Collapsed" Margin="2">Файлы не найдены.</TextBlock>
+                                                            <ListBox Background="White" Name="listBoxFiles"
+                                                                Padding="0" BorderThickness="0" 
+                                                                ItemsSource="{Binding Files}">
+
+                                                                <ListBox.ItemContainerStyle>
+                                                                    <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxOption}">
+                                                                        <Setter Property="Padding" Value="0"/>
+                                                                        <Setter Property="Height" Value="26"/>
+                                                                    </Style>
+                                                                </ListBox.ItemContainerStyle>
+                                                            </ListBox>
+                                                        </StackPanel>
+                                                    </ScrollViewer>
+                                                </Border>
+                                                <!--#endregion-->
+
+                                                <!-- #region Save and load. -->
+                                                <StackPanel Visibility="{Binding ElementName=loadFilesButton, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                                    <!--TextBox for loading and saving files. -->
+                                                    <Grid Margin="0,10,0,0">
+                                                        <TextBox x:Name="newFileName"  VerticalAlignment="Center" FontSize="14" 
+                                                        Style="{StaticResource TextBoxTxtFiles}"/>
+                                                        <TextBlock HorizontalAlignment="Right" Margin="0,0,4,0" FontSize="13" >.json</TextBlock>
+                                                    </Grid>
+
+                                                    <Grid Height="24" Margin="0,10,0,0">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="1.7*"/>
+                                                            <ColumnDefinition/>
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <!--Load Button-->
+                                                        <Button Grid.Column="0" Style = "{StaticResource HoverButton}"  Margin="0,0,5,0"
+                                                            Click="SaveAsNewFileButton_Click" Height ="24">Сохранить как новый файл</Button>
+                                                        <!--Remove Button-->
+                                                        <Button Grid.Column="1" Style = "{StaticResource HoverButton}" Margin="5,0,0,0"
+                                                            Click="RemoveButton_Click"  Height ="24">Удалить</Button>
+
+                                                    </Grid>
+                                                </StackPanel>
+                                                <!--#endregion -->
+
+                                            </StackPanel>
+                                        </Border>
+                                    </Grid>
+
+                                </StackPanel>
+                            </Border>
+                            <!--#endregion-->
+                        </Grid>
+                    </StackPanel>
+
+                    <Button Grid.Row="1" Height="35" Style="{StaticResource HoverButton}" Click="OpenPopup_Click" Name="AlgorithmExplanation"
+                            BorderThickness="0,1,0,0" BorderBrush="LightGray">Об Алгоритме</Button>
+
+                </Grid>
             </Border>
-
             <!--#endregion-->
 
             <!--#region MainBody-->
-            <Border Grid.Row="1" Grid.Column="0">
-                <!--Grid for gradient glow-->
+            <Border Grid.Row="0" Grid.Column="1">
                 <Grid>
-                    <Grid.Resources>
-                        <ResourceDictionary Source="XAML Controls/Gradient.xaml"/>
-                    </Grid.Resources>
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="10"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition Height="10"/>
-                    </Grid.RowDefinitions>
-
-                    <!--Canvas for drawing the graph-->
-                    <Border Grid.Row="0" Grid.Column="0" MouseDown="Border_MouseDown" x:Name="canvasBorder"
+                    <Border MouseDown="Border_MouseDown" x:Name="canvasBorder"
                         MouseMove="Border_MouseMove" MouseUp="Border_MouseUp" >
                         <Canvas x:Name="graphCanvas" Background="Transparent">
                             <Path x:Name="previewArrow" Canvas.ZIndex="100000"/>
                         </Canvas>
                     </Border>
-
-
-                    <!--#region Gradient glow-->
-                    <ContentControl Grid.Column="1" Grid.Row="0" Content="{StaticResource GradientRT}"/>
-                    <ContentControl Grid.Column="0" Grid.Row="1" Content="{StaticResource GradientRB}"/>
-                    <ContentControl Grid.Column="1" Grid.Row="1" Content="{StaticResource GradientRT}" />
-                    <!--#endregion-->
                 </Grid>
             </Border>
             <!--#endregion-->
 
-            <!--#region SideBar-->
-            <Border Grid.Row="1" Grid.Column="2"  Panel.ZIndex="1000" VerticalAlignment="Top"
-            Background="#F0F0F0" BorderBrush="LightGray" BorderThickness="2 0 0 0" >
-                <StackPanel x:Name="Sidebar">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="40"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-
-                        <!-- Buttons for choosing a panel to display -->
-                        <Border Grid.Row="0">
-                            <StackPanel Orientation="Horizontal">
-                                <Button Click="SidebarSwitch_Click" Style="{StaticResource SwitchButtonSelected}" Content="Примеры" Width="150" x:Name="examplesButton"/>
-                                <Button Click="SidebarSwitch_Click" Style="{StaticResource SwitchButton}" Content="Загрузка из файла" Width="150"/>
-                            </StackPanel>
-                        </Border>
-
-                        <Border Padding="15,0" Grid.Row="1" Height="640" Background="{StaticResource HeaderColor}">
-                            <StackPanel>
-                                <!--Examples Load Button-->
-                                <StackPanel Name="ExamplesPanel" Margin="0,10,0,0">
-                                    <Button Grid.Column ="0" Style="{StaticResource HoverButton}" Click="LoadButton_Click" Margin="0,1,5,1" Height ="22" Grid.RowSpan="2">Загрузить пример</Button>
-                                </StackPanel>
-
-                                <!--#region Save & Load-->
-                                <StackPanel Name="SaveAndLoadPanel" Visibility="Collapsed">
-                                    <Grid Height="24" Margin="0,10,0,0">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="5*"/>
-                                            <RowDefinition Height="19*"/>
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition/>
-                                        </Grid.ColumnDefinitions>
-                                        <!--Load Button-->
-                                        <Button Grid.Column ="0" Style="{StaticResource HoverButton}" Click="LoadButton_Click" Margin="0,1,5,1" Height ="22" Grid.RowSpan="2">Загрузить</Button>
-                                        <!--Save Button-->
-                                        <Button Grid.Column="1" Style="{StaticResource HoverButton}" Click="SaveButton_Click" Margin="5,1,0,1" Height ="22" Grid.RowSpan="2">Сохранить</Button>
-                                        <!--Add new file-->
-                                    </Grid>
-                                </StackPanel>
-                                <!--#endregion-->
-
-                                <!--IO Error message-->
-                                <TextBlock x:Name="IOErrorMessage" Foreground="Red" FontWeight="SemiBold" Margin="0,10,0,0" Visibility="Collapsed"/>
-
-                                <!--#region File list-->
-                                <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="1" Margin="0,10,0,0" Background="White">
-                                    <ScrollViewer  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                                        <StackPanel>
-                                            <TextBlock x:Name="noFilesMessage" Visibility="Collapsed" Margin="2">Файлы не найдены.</TextBlock>
-                                            <ListBox Background="White" Name="listBoxFiles"
-                                            Padding="0" BorderThickness="0" 
-                                     
-                                            ItemsSource="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:MainWindow}},
-                                            Path=DataContext.Files}">
-
-                                                <ListBox.ItemContainerStyle>
-                                                    <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxOption}">
-                                                        <Setter Property="Padding" Value="0"/>
-                                                    </Style>
-                                                </ListBox.ItemContainerStyle>
-                                            </ListBox>
-                                        </StackPanel>
-                                    </ScrollViewer>
-                                </Border>
-                                <!--#endregion-->
-
-                                <!-- #region Save and load. -->
-                                <StackPanel Visibility="{Binding ElementName=SaveAndLoadPanel, Path=Visibility}">
-                                    <!--TextBox for loading and saving files. -->
-                                    <Grid Margin="0,10,0,0">
-                                        <TextBox x:Name="newFileName"  VerticalAlignment="Center" FontSize="14" 
-                                    Style="{StaticResource TextBoxTxtFiles}"/>
-                                        <TextBlock HorizontalAlignment="Right" Margin="0,0,4,0" FontSize="13" >.json</TextBlock>
-                                    </Grid>
-
-                                    <Grid Height="24" Margin="0,10,0,0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="1.7*"/>
-                                            <ColumnDefinition/>
-                                        </Grid.ColumnDefinitions>
-
-                                        <!--Load Button-->
-                                        <Button Grid.Column="0" Style = "{StaticResource HoverButton}"  Margin="0,0,5,0"
-                                        Click="SaveAsNewFileButton_Click" Height ="24">Сохранить как новый файл</Button>
-                                        <!--Remove Button-->
-                                        <Button Grid.Column="1" Style = "{StaticResource HoverButton}" Margin="5,0,0,0"
-                                        Click="RemoveButton_Click"  Height ="24">Удалить</Button>
-
-                                    </Grid>
-                                </StackPanel>
-                                <!--#endregion -->
-
-                            </StackPanel>
-                        </Border>
-                    </Grid>
-
-                </StackPanel>
-            </Border>
-            <!--#endregion-->
-
             <!--#region Pseudocode-->
-            <Border Name="Code"  Panel.ZIndex="1002" Visibility="Collapsed" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top"
-             Background="{StaticResource PseudocodeBackground}" 
-                BorderBrush="{StaticResource BorderColor}" BorderThickness="2,0">
+            <Border Name="Code" Grid.ColumnSpan="2" Panel.ZIndex="50000" Visibility="Collapsed" Grid.Row="0" Grid.Column="0" VerticalAlignment="Top"
+             Background="{StaticResource PlayerColor}" Width="400" HorizontalAlignment="Left"
+                BorderBrush="{StaticResource BorderColor}" BorderThickness="0,0,2,0" Height="Auto">
                 <StackPanel>
+                    
+                    <Border Height="50" BorderBrush="{StaticResource BorderColor}" BorderThickness="0,0,0,2" Padding="10">
+                        <Button HorizontalAlignment="Left" Content="⟵ Назад" Click="EndButton_Click" Style="{StaticResource HoverButton}" Width="150"/>
+                    </Border>
+                    
                     <TextBlock Margin="10,5,10,5" Text="Псевдокод:"/>
 
                     <Grid VerticalAlignment="Top">
@@ -319,10 +400,10 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="15"/>
                             <RowDefinition Height="23"/>
-                            <RowDefinition Height="15"/>
+                            <RowDefinition Height="27"/>
                             <RowDefinition Height="34"/>
                             <RowDefinition Height="10"/>
-                            <RowDefinition Height="15"/>
+                            <RowDefinition Height="27"/>
                             <RowDefinition Height="44"/>
                         </Grid.RowDefinitions>
 
@@ -336,8 +417,11 @@
                         </TextBlock>
 
                         <TextBlock Grid.Row="2" Foreground="{StaticResource Comment}"> 
-                    <Run xml:space="preserve" Text="    "/>
-                    // Находим непосещенную вершину с наименьшим расстоянием
+                            <Run xml:space="preserve" Text="    "/>
+                            // Находим непосещенную вершину с наименьшим 
+                            <LineBreak/>
+                            <Run xml:space="preserve" Text="    "/>
+                            // расстоянием
                         </TextBlock>
 
                         <TextBlock Grid.Row="3" x:Name="codeFindMin">
@@ -354,7 +438,9 @@
 
                         <TextBlock Grid.Row="5" Foreground="{StaticResource Comment}">    
                     <Run xml:space="preserve" Text="    "/>
-                    // Релаксируем все ребра, выходящие из этой вершины
+                    // Релаксируем все ребра, выходящие из 
+                            <LineBreak/>  <Run xml:space="preserve" Text="    "/>
+                          этой вершины
                         </TextBlock>
 
                         <TextBlock Grid.Row="6" x:Name="codeRelaxEdges">                         
@@ -364,15 +450,15 @@
                         AdjacentEdges(minNode): <LineBreak/>
                         <Run xml:space="preserve" Text="        "/>
                         dist[edge.to] = min(dist[edge.to], <LineBreak/>
-                        <Run xml:space="preserve" Text="                            "/>
+                        <Run xml:space="preserve" Text="                    "/>
                         dist[minNode] + edge.weight)
                         </TextBlock>
                     </Grid>
 
-                    <Border Height="60" BorderBrush="{StaticResource BorderColor}" BorderThickness="0,2,0,2">
+                    <Border Height="Auto" BorderBrush="{StaticResource BorderColor}" BorderThickness="0,2,0,2">
                         <StackPanel>
                             <TextBlock  Margin="10,5,10,0" Text="Пояснение:" />
-                            <TextBlock FontSize="13.5" Text="{Binding Description}" Margin="10,10,10,0"
+                            <TextBlock TextWrapping="Wrap" FontSize="13" Text="{Binding Description}" Margin="10,10,10,10"
                                 HorizontalAlignment="Center"/>
                         </StackPanel>
                     </Border>
@@ -381,17 +467,18 @@
             <!--#endregion-->
 
             <!--#region Legend -->
-            <Border Grid.Row="1" Grid.Column="1"  Panel.ZIndex="1002" VerticalAlignment="Bottom" Height="Auto" BorderBrush="{StaticResource BorderColor}"
-                BorderThickness="2,2,2,0" Margin="1,0,-1,0" Visibility="{Binding ElementName=Code, Path=Visibility}" Background="White">
+            <Border Grid.ColumnSpan="2"  Background="{StaticResource PlayerColor}" Grid.Row="0" Grid.Column="0"  Panel.ZIndex="1002" VerticalAlignment="Bottom" Height="Auto" BorderBrush="{StaticResource BorderColor}"
+                BorderThickness="2,2,2,0" Width="400" HorizontalAlignment="Left"
+                    Visibility="{Binding ElementName=Code, Path=Visibility}" >
                 <StackPanel>
-                    
+
                     <Border Height="50" BorderBrush="{StaticResource BorderColor}" BorderThickness="0,0,0,2" x:Name="negativeEdgesWarning">
                         <TextBlock FontSize ="13" Margin="10,5,10,0" Foreground="OrangeRed" FontWeight="SemiBold">
                                 <Run Text="Предупреждение: алгоритм может работать неправильно -"/><LineBreak/>
                                 <Run Text=" - присутсвуют отрицательные ребра"/>
-                            </TextBlock>
+                        </TextBlock>
                     </Border>
-                    
+
                     <StackPanel Height="130">
                         <StackPanel.Resources>
                             <ResourceDictionary Source="XAML Controls/Legend.xaml"/>

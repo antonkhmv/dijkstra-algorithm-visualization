@@ -103,7 +103,7 @@ namespace Dijkstra_Algorithm_Visualization
                     }
 
                     nodes[to].Distance = value;
-                    nodes[to].UpdateDistanceText(DoubleToString(value));
+                    nodes[to].UpdateDistanceText();
                 }
 
             }

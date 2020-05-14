@@ -28,9 +28,9 @@ namespace Dijkstra_Algorithm_Visualization
             // Relabel the indexes of the nodes.
             for (int i = ind; i < nodes.Count; ++i)
             {
+                ;
                 nodes[i].Index--;
-                // Update the index text of the nodes.
-                nodes[i].UpdateIndexText();
+                ;
             }
 
             if (SelectedNode == ind)
