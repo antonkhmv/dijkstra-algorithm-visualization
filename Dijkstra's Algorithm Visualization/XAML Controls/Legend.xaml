@@ -2,33 +2,33 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Dijkstra_Algorithm_Visualization">
 
-    <Canvas x:Key="LegendCanvas" Width="Auto" Height="100">
-        <Ellipse Width="15" Height="15" Canvas.Top="8" Canvas.Left="6" Stroke="#3297fd" StrokeThickness="2"/>
-        <TextBlock Canvas.Top="8" Canvas.Left="28"><Run Text="Начальная вершина"/></TextBlock>
+    <Canvas x:Key="LegendCanvas" Width="Auto" Height="Auto">
+        <Ellipse Width="15" Height="15" Canvas.Top="8" Canvas.Left="15" Stroke="#3297fd" StrokeThickness="2"/>
+        <TextBlock Canvas.Top="8" Canvas.Left="56"><Run Text="Начальная вершина"/></TextBlock>
 
-        <Ellipse Width="15" Height="15" Canvas.Top="28" Canvas.Left="6" Stroke="LawnGreen" StrokeThickness="2"/>
-        <TextBlock Canvas.Top="27" Canvas.Left="28"><Run Text="Вершина проверяется"/></TextBlock>
+        <Ellipse Width="15" Height="15" Canvas.Top="30" Canvas.Left="15" Stroke="LawnGreen" StrokeThickness="2"/>
+        <TextBlock Canvas.Top="30" Canvas.Left="56"><Run Text="Вершина проверяется"/></TextBlock>
 
-        <Ellipse Width="15" Height="15" Canvas.Top="51" Canvas.Left="6" Stroke="OrangeRed" StrokeThickness="2"/>
-        <TextBlock Canvas.Top="49" Canvas.Left="28"><Run Text="Вершина уже использована"/></TextBlock>
+        <Ellipse Width="15" Height="15" Canvas.Top="52" Canvas.Left="15" Stroke="OrangeRed" StrokeThickness="2"/>
+        <TextBlock Canvas.Top="52" Canvas.Left="56"><Run Text="Вершина уже использована"/></TextBlock>
 
-        <Ellipse Width="15" Height="15" Canvas.Top="72" Canvas.Left="6" Stroke="Aqua" StrokeThickness="2"/>
-        <TextBlock Canvas.Top="71" Canvas.Left="28">
+        <Ellipse Width="15" Height="15" Canvas.Top="74" Canvas.Left="15" Stroke="Aqua" StrokeThickness="2"/>
+        <TextBlock Canvas.Top="74" Canvas.Left="56">
                                 <Run Text="Вершина минимальна"/><LineBreak/><Run Text="(на этом шаге)"/></TextBlock>
 
-        <Path Fill="OrangeRed" Canvas.Left="202" Canvas.Top="13.5" Height="9.5" Stretch="Fill">
-            <Path.Data>
-                <PathGeometry Figures=" M 0 10 L 10 20 L 10 12 L 40 12 L 40 8 L 10 8 L 10 0 L 0 10 Z" />
-            </Path.Data>
-        </Path>
-        <Path Fill="LightGray" Canvas.Left="202" Canvas.Top="36.084" Height="9.166" Stretch="Fill">
-            <Path.Data>
-                <PathGeometry Figures=" M 0 10 L 10 20 L 10 12 L 40 12 L 40 8 L 10 8 L 10 0 L 0 10 Z" />
-            </Path.Data>
-        </Path>
-        <TextBlock Canvas.Top="10" Canvas.Left="255"><Run Text="Ребро релаксировано"/></TextBlock>
-        <TextBlock Canvas.Top="31" Canvas.Left="255">
-        <Run Text="Ребро ожидает "/><LineBreak/> <Run Text="релаксации или "/> <LineBreak/> <Run Text="Ребро не релаксировано"/></TextBlock>
+        <Path Fill="OrangeRed" Canvas.Left="6" Canvas.Top="120" Height="9.5" Stretch="Fill" 
+              Data=" M 0 10 L 10 20 L 10 12 L 40 12 L 40 8 L 10 8 L 10 0 L 0 10 Z" />
+        <TextBlock Canvas.Top="115" Canvas.Left="53"><Run Text="Ребро релаксировано"/></TextBlock>
+        
+        <Path Fill="Gray" Canvas.Left="6" Canvas.Top="140" Height="9.166" Stretch="Fill"
+              Data=" M 0 10 L 10 20 L 10 12 L 40 12 L 40 8 L 10 8 L 10 0 L 0 10 Z" />
+        <TextBlock Canvas.Top="135" Canvas.Left="53" Text="Ребро не релаксировано"/>
+        
+        <Path Fill="LightGray" Canvas.Left="6" Canvas.Top="160" Height="9.166" Stretch="Fill" 
+              Data=" M 0 10 L 10 20 L 10 12 L 40 12 L 40 8 L 10 8 L 10 0 L 0 10 Z" />
+        <TextBlock Canvas.Top="155" Canvas.Left="53" Text="Ребро ожидает релаксации"/>
+            
+            
     </Canvas>
 
 </ResourceDictionary>

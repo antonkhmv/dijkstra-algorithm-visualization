@@ -31,8 +31,8 @@ namespace Dijkstra_Algorithm_Visualization
 
                     if (edges.Contains(to, i) && edges[to, i].Direction == DirectionType.Forward)
                     {
-                        MakeDouble(i, to);
                         edges[i, to].Weight = weight;
+                        MakeDouble(i, to);
                     }
                     else
                     {

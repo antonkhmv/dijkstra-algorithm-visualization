@@ -36,7 +36,7 @@ namespace Dijkstra_Algorithm_Visualization
                 var checkedNodes = FindMin();
                 var relaxedEdges = new List<(int ind, double wt)>();
 
-                if (minNode != -1 && dist[minNode] != double.PositiveInfinity)
+                if (minNode != -1)
                 {
                     for (int j = 0; j < edges[minNode].Count; ++j)
                     {

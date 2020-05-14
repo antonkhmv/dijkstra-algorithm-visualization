@@ -12,7 +12,7 @@ namespace Dijkstra_Algorithm_Visualization
         /// The diameter of a standard node.
         /// </summary>
         public static double Diameter = 26.0;
-                                                 
+
         public TextBlock IndexText { get; set; }
         public TextBlock DistanceText { get; set; }
 
@@ -23,8 +23,9 @@ namespace Dijkstra_Algorithm_Visualization
         public int Index
         {
             get => index;
-            set {
-                index = value;        
+            set
+            {
+                index = value;
                 UpdateIndexText();
             }
         }
@@ -38,22 +39,20 @@ namespace Dijkstra_Algorithm_Visualization
         {
             string value = Index.ToString();
 
+            if (value != (string)IndexText.Text)
+            {
+                // Every time the text inside the node changes, update it.
+                IndexText.Text = value;
+
+                // Measures the size of the new textblock.
+                IndexText.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+                IndexText.Arrange(new Rect(IndexText.DesiredSize));
+            }
             IndexText.SetValue(Window.LeftProperty,
                 (double)Circle.GetValue(Window.LeftProperty) + Diameter / 2.0 - IndexText.ActualWidth / 2.0);
 
             IndexText.SetValue(Window.TopProperty,
                 (double)Circle.GetValue(Window.TopProperty) + Diameter / 2.0 - IndexText.ActualHeight / 2.0);
-
-            if (value == (string)IndexText.Text)
-                return;
-
-            // Every time the text inside the node changes, update it.
-            IndexText.Text = value;
-
-            // Measures the size of the new textblock.
-            IndexText.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
-            IndexText.Arrange(new Rect(IndexText.DesiredSize));
-
         }
 
         /// <summary>
@@ -71,20 +70,21 @@ namespace Dijkstra_Algorithm_Visualization
         {
             string value = DoubleToString(Distance);
 
+            if (value != (string)DistanceText.Text)
+            {
+                // Every time the text inside the node changes, update it.
+                DistanceText.Text = value;
+
+                // Measures the size of the new textblock.
+                DistanceText.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+                DistanceText.Arrange(new Rect(DistanceText.DesiredSize));
+            }
+
             DistanceText.SetValue(Window.LeftProperty,
                 (double)Circle.GetValue(Window.LeftProperty) + Diameter / 2.0 - DistanceText.ActualWidth / 2.0);
             DistanceText.SetValue(Window.TopProperty,
                 (double)Circle.GetValue(Window.TopProperty) + 25 + Diameter / 2.0 - DistanceText.ActualHeight / 2.0);
 
-            if (value == (string)DistanceText.Text)
-                return;
-
-            // Every time the text inside the node changes, update it.
-            DistanceText.Text = value;
-
-            // Measures the size of the new textblock.
-            DistanceText.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
-            DistanceText.Arrange(new Rect(DistanceText.DesiredSize));
 
         }
 
@@ -119,7 +119,7 @@ namespace Dijkstra_Algorithm_Visualization
 
             Index = index;
             Distance = double.PositiveInfinity;
-                                             
+
             IndexText.SetValue(Window.LeftProperty, x - IndexText.ActualWidth / 2.0);
             IndexText.SetValue(Window.TopProperty, y - IndexText.ActualHeight / 2.0);
 

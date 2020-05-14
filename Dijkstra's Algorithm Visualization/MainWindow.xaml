@@ -269,7 +269,7 @@
                                                 <Border  Grid.Column="1" Margin="5,0,0,0">
                                                     <Border BorderBrush="LightGray" BorderThickness="1"  VerticalAlignment="Center" Margin="0,0,1,0">
                                                         <RadioButton GroupName="FileMenu" Checked="SidebarSwitch_Checked" Style="{StaticResource SwitchMenuButton}"
-                                                               BorderBrush="LightGray" Content="Загрузить из файлов" Height="30" Name="loadFilesButton"/>
+                                                               BorderBrush="LightGray" Content="Загрузить из файла" Height="30" Name="loadFilesButton"/>
                                                     </Border>
                                                 </Border>
                                             </Grid>
@@ -372,7 +372,7 @@
                 <Grid>
                     <Border MouseDown="Border_MouseDown" x:Name="canvasBorder"
                         MouseMove="Border_MouseMove" MouseUp="Border_MouseUp" >
-                        <Canvas x:Name="graphCanvas" Background="Transparent">
+                        <Canvas x:Name="graphCanvas" Background="White">
                             <Path x:Name="previewArrow" Canvas.ZIndex="100000"/>
                         </Canvas>
                     </Border>
@@ -382,7 +382,7 @@
 
             <!--#region Pseudocode-->
             <Border Name="Code" Grid.ColumnSpan="2" Panel.ZIndex="50000" Visibility="Collapsed" Grid.Row="0" Grid.Column="0" VerticalAlignment="Top"
-             Background="{StaticResource PlayerColor}" Width="400" HorizontalAlignment="Left"
+             Background="{StaticResource PlayerColor}" Width="340" HorizontalAlignment="Left"
                 BorderBrush="{StaticResource BorderColor}" BorderThickness="0,0,2,0" Height="Auto">
                 <StackPanel>
                     
@@ -401,14 +401,14 @@
                             <RowDefinition Height="15"/>
                             <RowDefinition Height="23"/>
                             <RowDefinition Height="27"/>
-                            <RowDefinition Height="34"/>
+                            <RowDefinition Height="44"/>
                             <RowDefinition Height="10"/>
                             <RowDefinition Height="27"/>
                             <RowDefinition Height="44"/>
                         </Grid.RowDefinitions>
 
                         <TextBlock Grid.Row="0" Foreground="{StaticResource Comment}">
-                    // Пока есть не посещенные вершины
+                    // Пока есть непосещенные вершины
                         </TextBlock>
 
                         <TextBlock Grid.Row="1" x:Name="codeStart">
@@ -418,17 +418,18 @@
 
                         <TextBlock Grid.Row="2" Foreground="{StaticResource Comment}"> 
                             <Run xml:space="preserve" Text="    "/>
-                            // Находим непосещенную вершину с наименьшим 
+                            // Находим непосещенную вершину 
                             <LineBreak/>
                             <Run xml:space="preserve" Text="    "/>
-                            // расстоянием
+                            // с наименьшим расстоянием
                         </TextBlock>
 
                         <TextBlock Grid.Row="3" x:Name="codeFindMin">
                         <Run xml:space="preserve" Text="    "/>
                         <Run Style="{StaticResource HighlightedCode}">foreach</Run>
                         node <Run Style="{StaticResource HighlightedCode}">in</Run> nodes
-                                
+                                <LineBreak/>
+                        <Run xml:space="preserve" Text="    "/>
                         <Run Style="{StaticResource HighlightedCode}">where</Run>
                         node <Run Style="{StaticResource HighlightedCode}">not in</Run>
                         used:
@@ -438,9 +439,9 @@
 
                         <TextBlock Grid.Row="5" Foreground="{StaticResource Comment}">    
                     <Run xml:space="preserve" Text="    "/>
-                    // Релаксируем все ребра, выходящие из 
+                        // Релаксируем все ребра,
                             <LineBreak/>  <Run xml:space="preserve" Text="    "/>
-                          этой вершины
+                          // выходящие из  этой вершины
                         </TextBlock>
 
                         <TextBlock Grid.Row="6" x:Name="codeRelaxEdges">                         
@@ -450,7 +451,7 @@
                         AdjacentEdges(minNode): <LineBreak/>
                         <Run xml:space="preserve" Text="        "/>
                         dist[edge.to] = min(dist[edge.to], <LineBreak/>
-                        <Run xml:space="preserve" Text="                    "/>
+                        <Run xml:space="preserve" Text="                "/>
                         dist[minNode] + edge.weight)
                         </TextBlock>
                     </Grid>
@@ -467,31 +468,32 @@
             <!--#endregion-->
 
             <!--#region Legend -->
-            <Border Grid.ColumnSpan="2"  Background="{StaticResource PlayerColor}" Grid.Row="0" Grid.Column="0"  Panel.ZIndex="1002" VerticalAlignment="Bottom" Height="Auto" BorderBrush="{StaticResource BorderColor}"
-                BorderThickness="2,2,2,0" Width="400" HorizontalAlignment="Left"
+            <Border Grid.ColumnSpan="2"  Background="{StaticResource PlayerColor}" Grid.Row="0" Grid.Column="0"  Panel.ZIndex="1002" VerticalAlignment="Bottom" 
+                    Height="Auto" BorderBrush="{StaticResource BorderColor}"
+                BorderThickness="0,2,2,0" Width="340" HorizontalAlignment="Left"
                     Visibility="{Binding ElementName=Code, Path=Visibility}" >
                 <StackPanel>
 
                     <Border Height="50" BorderBrush="{StaticResource BorderColor}" BorderThickness="0,0,0,2" x:Name="negativeEdgesWarning">
-                        <TextBlock FontSize ="13" Margin="10,5,10,0" Foreground="OrangeRed" FontWeight="SemiBold">
-                                <Run Text="Предупреждение: алгоритм может работать неправильно -"/><LineBreak/>
-                                <Run Text=" - присутсвуют отрицательные ребра"/>
+                        <TextBlock TextWrapping="Wrap" FontSize ="13" Margin="10,5,10,0" Foreground="OrangeRed" FontWeight="SemiBold">
+                                <Run Text="Предупреждение: алгоритм может работать неправильно - присутсвуют отрицательные ребра"/>
                         </TextBlock>
                     </Border>
 
-                    <StackPanel Height="130">
+                    <StackPanel Height="200">
                         <StackPanel.Resources>
                             <ResourceDictionary Source="XAML Controls/Legend.xaml"/>
                         </StackPanel.Resources>
 
                         <!--Legend-->
                         <TextBlock  Margin="10,5,10,0" Text="Обозначения:"/>
-                        <ContentControl Content="{StaticResource ResourceKey=LegendCanvas}" />
+                        <ContentControl Content="{StaticResource ResourceKey=LegendCanvas}" Height="150" />
                     </StackPanel>
                 </StackPanel>
             </Border>
             <!--#endregion-->
-
+            <Border Grid.Row="0" Grid.Column="0" Background="White"
+                Visibility="{Binding ElementName=Code, Path=Visibility}"/>
         </Grid>
     </Grid>
 </Window>

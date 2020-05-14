@@ -26,7 +26,7 @@ namespace Dijkstra_Algorithm_Visualization
                     double checkedWeight = descriptionParams[0];
                     double minWeight = descriptionParams[1];
 
-                    Description = $"Расстояние до вершины = {checkedWeight}; {{мин. расстояние = {minWeight}}}";
+                    Description = $"Расстояние до вершины = {checkedWeight}. \n{{мин. расстояние = {minWeight}}}";
                     break;
                 case CodeBlock.RelaxedEdges:
 
@@ -39,18 +39,18 @@ namespace Dijkstra_Algorithm_Visualization
                     // if the node is relaxed.
                     if (dist + edgeWeight < nodeDist)
                     {
-                        Description = $"Ребро релаксировано: {dist} + {edgeWeight} < {nodeDist}. {{Новое расстояние: {dist + edgeWeight}}})";
+                        Description = $"Ребро релаксировано: {dist} + {edgeWeight} < {nodeDist}.\n{{Новое расстояние: {dist} + {edgeWeight} = {dist + edgeWeight}}}";
                     }
                     else
                     {
-                        Description = $"Ребро не реласировано: {dist} + {edgeWeight} >= {nodeDist}. {{Новое расстояние: {nodeDist}}}";
+                        Description = $"Ребро не реласировано: {dist} + {edgeWeight} >= {nodeDist}.\n{{Расстояние: {nodeDist}}}";
                     }
                     break;
                 case CodeBlock.None:
 
                     // Params are expected to have the time complexity of the algorithm.
                     int complexity = (int)descriptionParams[0];
-                    Description = $"Алгоритм окончен. Посещено вершин и ребер: O(|V|^2+|E|) = {complexity}";
+                    Description = $"Алгоритм окончен. Посещено вершин и ребер:\nO(|V|^2+|E|) = {complexity}";
                     break;
             }
         }

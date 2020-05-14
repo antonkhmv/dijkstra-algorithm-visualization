@@ -16,8 +16,13 @@ namespace Dijkstra_Algorithm_Visualization
                 // Works for both separators: '.' and ','
                 text = text.Replace(',', '.');
 
-                if (double.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, out double weight))
+                if (double.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, out double weight) 
+                    || text == string.Empty)
                 {
+                    if (text == string.Empty)
+                    {
+                        selectedEdge.Weight = double.NaN;
+                    }
                     // Set the edge's weight.
                     selectedEdge.Weight = weight;
 
@@ -29,8 +34,9 @@ namespace Dijkstra_Algorithm_Visualization
 
                     edge.UpdateText();
                     opposite.UpdateText();
-
                 }
+
+                
             }
         }
     }

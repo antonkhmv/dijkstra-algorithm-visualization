@@ -122,6 +122,8 @@ namespace Dijkstra_Algorithm_Visualization
 
                 window.graphCanvas.Children.Add(nodes[i].DistanceText);
                 nodes[i].Distance = value;
+                nodes[i].DistanceText.Background = Brushes.White;
+
                 nodes[i].UpdateDistanceText();
                 nodes[i].UpdateDistanceText();
             }

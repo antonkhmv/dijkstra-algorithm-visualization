@@ -1,5 +1,8 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Windows;
 
 namespace Dijkstra_Algorithm_Visualization
@@ -31,20 +34,27 @@ namespace Dijkstra_Algorithm_Visualization
             if (listBoxFiles != null)
                 listBoxFiles.SelectedIndex = selectedFile;
 
-            string[] dir;
+            IEnumerable<string> dir;
 
             try { 
                 // look for files ending in .json
-                dir = Directory.GetFiles(path, "*.json");
+                var res = new DirectoryInfo(path).GetFiles("*.json");
+
+                if (loadPath == @"\Examples\")
+                {
+                    Array.Sort(res, (a, b) => a.LastWriteTime < b.LastWriteTime ? 1 : -1);
+                }
+
+                dir = res.Select(x => x.Name);
             }
             catch // files not found / directory missing.
             {
-                dir = new string[0];
+                dir = new List<string>();
             }
 
             foreach (var file in dir)
             {
-                Files.Add(GetFileNameFromPath(file));
+                Files.Add(file);
             }
 
             // if no files found.

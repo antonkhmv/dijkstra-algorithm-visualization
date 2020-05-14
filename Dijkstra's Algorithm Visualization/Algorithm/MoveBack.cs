@@ -81,6 +81,10 @@ namespace Dijkstra_Algorithm_Visualization
                 {
                     var prev = step.checkedNodes[CurrentCheckedIndex - 1];
 
+                    // Change description params: checkedDistance, minDistance
+                    window.ChangeDescription(MainWindow.CodeBlock.FindMin,
+                        nodes[prev.ind].Distance, nodes[prev.minNode].Distance);
+
                     // If last node is currently min, paint it as min.               
                     if (node.minNode == prev.ind)
                     {
@@ -96,6 +100,7 @@ namespace Dijkstra_Algorithm_Visualization
                     }
                     // Set the previous to min.
                     Shapes.SetCircleType(nodes[prev.ind], CircleType.Checked);
+
                 }
                 else // if CurrentCheckedIndex == 0
                 {
@@ -129,14 +134,13 @@ namespace Dijkstra_Algorithm_Visualization
                     }
                 }
 
+
                 // if the previous step is the firt.
-                if (CurrentStep == 0)
+                if (window.SelectedNode == node.ind)
                 {
                     Shapes.SetCircleType(nodes[window.SelectedNode], CircleType.Selected);
                 }
             }
-
-
         }
 
         private void MoveIteratorBackward()

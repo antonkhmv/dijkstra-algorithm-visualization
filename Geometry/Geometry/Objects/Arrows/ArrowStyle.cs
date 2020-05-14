@@ -45,7 +45,7 @@ namespace Drawing
                     break;
 
                 case ArrowType.NotRelaxed:
-                    arrow.Fill = Brushes.LightGray;
+                    arrow.Fill = Brushes.Gray;
                     break;
 
                 case ArrowType.Waiting:
