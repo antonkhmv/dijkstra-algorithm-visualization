@@ -113,7 +113,6 @@
     <Compile Include="Data IO\GetFromDrawing.cs" />
     <Compile Include="Data IO\Graph.cs" />
     <Compile Include="Data IO\LoadFromFile.cs" />
-    <Compile Include="Data IO\GetFileNameFromPath.cs" />
     <Compile Include="Data IO\RefreshOptions.cs" />
     <Compile Include="Data IO\SaveAsFile.cs" />
     <Compile Include="XAML Control Events\Sidebar\SaveAsNewFileButton_Click.cs" />

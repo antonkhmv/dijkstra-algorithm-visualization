@@ -412,8 +412,8 @@
                         </TextBlock>
 
                         <TextBlock Grid.Row="1" x:Name="codeStart">
-                        <Run Style="{StaticResource HighlightedCode}">while </Run>
-                        node <Run Style="{StaticResource HighlightedCode}">in</Run> nodes:
+                        <Run Style="{StaticResource HighlightedCode}">while not all </Run>
+                        nodes <Run Style="{StaticResource HighlightedCode}">in</Run> used:
                         </TextBlock>
 
                         <TextBlock Grid.Row="2" Foreground="{StaticResource Comment}"> 

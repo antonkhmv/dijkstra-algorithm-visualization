@@ -18,6 +18,12 @@ namespace Dijkstra_Algorithm_Visualization
             bool isFound = false;
             foreach (var edge in edges) {
 
+                // Skip backward edges.
+                if (edge.Direction == DirectionType.Backward)
+                {
+                    continue;
+                }
+
                 Point begin = edge.FirstNode.Center;
                 Point end = edge.SecondNode.Center;
 

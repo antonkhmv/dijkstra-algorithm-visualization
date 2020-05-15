@@ -32,9 +32,19 @@ namespace Dijkstra_Algorithm_Visualization
 
         private int maxIndex = 0;
 
+        /// <summary>
+        /// Maximum reachable value for the iterator.
+        /// </summary>
         public int MaxIndex { get => maxIndex; }
 
+        /// <summary>
+        /// Checks if the iterator has reached the begining.
+        /// </summary>
         public bool IsFirst { get => Iterator == 0; }
+        
+        /// <summary>
+        /// Checks if the iterator has reached the endging.
+        /// </summary>
         public bool IsLast { get => CurrentStep == steps.Count; }
 
         /// <summary>
