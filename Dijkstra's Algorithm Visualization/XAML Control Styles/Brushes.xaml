@@ -8,5 +8,5 @@
     <SolidColorBrush x:Key="Highlighted" Color="CornflowerBlue"/>
     <SolidColorBrush x:Key="Comment" Color="Green"/>
     <SolidColorBrush x:Key="DistanceColor" Color="Black"/>
-    <SolidColorBrush x:Key="PlayerColor" Color="#FDFCFD"/>
+    <SolidColorBrush x:Key="PlayerColor" Color="#FCFCFC"/>
 </ResourceDictionary>
