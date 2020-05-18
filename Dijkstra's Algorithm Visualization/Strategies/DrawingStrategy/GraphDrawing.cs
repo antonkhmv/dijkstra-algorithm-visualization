@@ -7,15 +7,16 @@ namespace Dijkstra_Algorithm_Visualization
 {
     public partial class MainWindow : Window
     {
+
         /// <summary>
         /// The scale of radius for the range of drawing an arrow.
         /// </summary>
-        public double radiusScale = 1.5;
+        public const double radiusScale = 1.5;
 
         /// <summary>
         /// The hit box size of the arrow (half of thickness of a rectangle the arrow is contained in).
         /// </summary>
-        public double arrowHitBoxSize = 5.0;
+        public const double arrowHitBoxSize = 5.0;
 
         /// <summary>
         /// A collection of edges that stores the arrows in a dictionary, and adjacent nodes in a nested list.
@@ -35,7 +36,7 @@ namespace Dijkstra_Algorithm_Visualization
         /// <summary>
         /// The node that the algorithm starts with.
         /// </summary>
-        public int selectedNode = -1;
+        private int selectedNode = -1;
 
         /// <summary>
         /// Property for automatically changing the SelectedNodeText.
@@ -43,8 +44,30 @@ namespace Dijkstra_Algorithm_Visualization
         public int SelectedNode
         {
             get => selectedNode;
-            set {
+            set
+            {
                 selectedNode = value;
+                OnPropertyChanged("SelectedNodeText");
+            }
+        }
+
+        /// <summary>
+        /// Text in the selected Node box
+        /// </summary>
+        public string SelectedNodeText
+        {
+            get => SelectedNode != -1 ? SelectedNode.ToString() : string.Empty;
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    UnselectCurrentNode();
+                }
+                if (int.TryParse(value, out int index))
+                {
+                    SelectedNodeErrorMessage.Text = string.Empty;
+                    SelectNode(index);
+                }
                 OnPropertyChanged("SelectedNodeText");
             }
         }

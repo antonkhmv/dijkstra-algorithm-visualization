@@ -23,7 +23,7 @@ namespace Dijkstra_Algorithm_Visualization
             }
 
             // The key of the arrow in the dictionary.
-            bool arrowIsInRange = window.FindArrowInRange(out Edge edge, p, window.arrowHitBoxSize);
+            bool arrowIsInRange = window.FindArrowInRange(out Edge edge, p, MainWindow.arrowHitBoxSize);
 
             // If the delete button is pressed and the cursor is in range of the arrow.
             if (e.LeftButton == MouseButtonState.Pressed && arrowIsInRange)

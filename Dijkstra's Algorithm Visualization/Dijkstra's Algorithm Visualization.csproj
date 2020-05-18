@@ -129,7 +129,7 @@
     <Compile Include="Strategies\DrawingStrategy\MouseMove.cs" />
     <Compile Include="Strategies\StartStrategy\StartStrategy.cs" />
     <Compile Include="Strategies\Strategy.cs" />
-    <Compile Include="Strategies\ChangeEdgeWeightStrategy\ChangeEdgeWeightStartegy.cs" />
+    <Compile Include="Strategies\DrawingStrategy\ChangeEdgeWeightStrategy\ChangeEdgeWeightStartegy.cs" />
     <Compile Include="Graph Drawing\Utility\ClearAllNodesAndEdges.cs" />
     <Compile Include="Graph Drawing\Utility\SelectNode.cs" />
     <Compile Include="Graph Drawing\Utility\UpdateAllWeightText.cs" />

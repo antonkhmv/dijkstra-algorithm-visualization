@@ -23,26 +23,6 @@ namespace Dijkstra_Algorithm_Visualization
             }
         }
 
-        /// <summary>
-        /// Text in the selected Node box
-        /// </summary>
-        public string SelectedNodeText
-        {
-            get => SelectedNode != -1 ? SelectedNode.ToString() : string.Empty;
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                {
-                    UnselectCurrentNode();
-                }
-                if (int.TryParse(value, out int index))
-                {
-                    SelectedNodeErrorMessage.Text = string.Empty;
-                    SelectNode(index);
-                }
-                OnPropertyChanged("SelectedNodeText");
-            }
-        }
 
         /// <summary>
         /// Constants for calculating the delay of the player (in ms)

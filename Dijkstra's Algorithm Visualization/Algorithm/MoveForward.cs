@@ -82,18 +82,19 @@ namespace Dijkstra_Algorithm_Visualization
 
                 if (step.relaxedEdges.Count != 0)
                 {
-                    var (to, _) = step.relaxedEdges[CurrentRelaxedIndex];
+                    var (to, weight) = step.relaxedEdges[CurrentRelaxedIndex];
                     var edge = edges[step.minNode, to];
+                    var distMin = nodes[step.minNode].Distance;
 
                     // params: dist, edgeWeight, nodeDist
                     window.ChangeDescription(MainWindow.CodeBlock.RelaxedEdges,
-                        dist[step.minNode], edge.Weight, nodes[to].Distance);
+                        distMin, edge.Weight, nodes[to].Distance);
 
                     double value;
 
-                    if (dist[step.minNode] + edge.Weight < nodes[to].Distance)
+                    if (distMin + edge.Weight < nodes[to].Distance)
                     {
-                        value = dist[step.minNode] + edge.Weight;
+                        value = distMin + edge.Weight;
                         Shapes.SetArrowType(edge.Arrow, ArrowType.Relaxed);
                     }
                     else

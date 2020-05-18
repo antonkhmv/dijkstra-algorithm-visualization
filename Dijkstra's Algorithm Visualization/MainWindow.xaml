@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Dijkstra_Algorithm_Visualization"
         mc:Ignorable="d"
-        Loaded="Window_Loaded" KeyDown="Window_KeyDown"
+        Loaded="Window_Loaded" 
         ResizeMode="CanMinimize" MouseDown="Window_MouseDown" 
         Title="Алгоритм Дейкстры" Height="820" Width="1280" Background="#F8F8F8">
 
@@ -127,7 +127,7 @@
                                     </Grid.ColumnDefinitions>
 
                                     <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Height="18" Margin="10,12,79,12" Width="116" Grid.ColumnSpan="2">
-                                <Run Text="Выбраная вершина"/>
+                                <Run Text="Начальная вершина"/>
                                     </TextBlock>
                                     <TextBox Text="{Binding Path=SelectedNodeText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                   Background="White" Margin="10,12" Grid.Column="1"/>
@@ -476,7 +476,7 @@
 
                     <Border Height="50" BorderBrush="{StaticResource BorderColor}" BorderThickness="0,0,0,2" x:Name="negativeEdgesWarning">
                         <TextBlock TextWrapping="Wrap" FontSize ="13" Margin="10,5,10,0" Foreground="OrangeRed" FontWeight="SemiBold">
-                                <Run Text="Предупреждение: алгоритм может работать неправильно - присутсвуют отрицательные ребра"/>
+                                <Run Text="Предупреждение: алгоритм может работать неправильно - присутствуют отрицательные ребра"/>
                         </TextBlock>
                     </Border>
 

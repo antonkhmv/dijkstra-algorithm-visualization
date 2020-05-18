@@ -15,7 +15,7 @@ namespace Dijkstra_Algorithm_Visualization
             }
             string name = newFileName.Text + ".json";
 
-            if (File.Exists(name))
+            if (File.Exists('.' + loadPath + name))
             {
                 IOErrorMessage.Text = "Файл уже существует.";
                 IOErrorMessage.Visibility = Visibility.Visible;
@@ -23,7 +23,7 @@ namespace Dijkstra_Algorithm_Visualization
             }
 
             RefreshOptions();
-
+            
             try
             {
                 File.Create('.' + loadPath + name).Close();

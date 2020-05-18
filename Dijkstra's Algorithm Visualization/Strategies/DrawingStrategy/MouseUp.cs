@@ -13,7 +13,7 @@ namespace Dijkstra_Algorithm_Visualization
         {
             Point p = GetMousePosition(e, sender);
 
-            bool isInRange = window.FindNodeInRange(out int node, p, window.radiusScale * Node.Diameter);
+            bool isInRange = window.FindNodeInRange(out int node, p, MainWindow.radiusScale * Node.Diameter);
 
             // Try to add a new edge between two selected nodes.
             if (addNewArrow)

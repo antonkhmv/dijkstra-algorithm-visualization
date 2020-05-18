@@ -64,7 +64,7 @@
                     <Run Text="левой кнопки мыши (ЛКМ) в точке,  "/><LineBreak/>
                     <Run Text="находящейся на небольшом расстоянии "/><LineBreak/>
                     <Run Text="(1.5 радиуса кружков) от какой-то "/><LineBreak/>
-                    <Run Text="уже выбранной вершины. (1 / 2)"/><LineBreak/>
+                    <Run Text="уже cуществующей вершины. (1 / 2)"/><LineBreak/>
                 </TextBlock>
             </StackPanel>
         </Border>

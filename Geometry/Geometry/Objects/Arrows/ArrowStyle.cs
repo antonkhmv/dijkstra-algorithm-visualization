@@ -50,7 +50,7 @@ namespace Drawing
 
                 case ArrowType.Waiting:
                     arrow.Fill = Brushes.LightGray;
-                    break;
+                    break; 
             }
         }
     }

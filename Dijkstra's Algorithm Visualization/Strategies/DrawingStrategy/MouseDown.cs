@@ -30,7 +30,7 @@ namespace Dijkstra_Algorithm_Visualization
 
             // The index of the node.
             bool mouseOnNode = window.FindNodeInRange(out int mouseNode, p, Node.Diameter / 2.0);
-            bool isInRange = window.FindNodeInRange(out int nodeInRange, p, window.radiusScale * Node.Diameter);
+            bool isInRange = window.FindNodeInRange(out int nodeInRange, p, MainWindow.radiusScale * Node.Diameter);
 
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -89,7 +89,7 @@ namespace Dijkstra_Algorithm_Visualization
             }
 
             // The key of the arrow in the dictionary.
-            bool arrowIsInRange = window.FindArrowInRange(out Edge edge, p, window.arrowHitBoxSize);
+            bool arrowIsInRange = window.FindArrowInRange(out Edge edge, p, MainWindow.arrowHitBoxSize);
 
             // If the delete button is pressed and the cursor is in range of the arrow.
             if (e.MiddleButton == MouseButtonState.Pressed && arrowIsInRange)

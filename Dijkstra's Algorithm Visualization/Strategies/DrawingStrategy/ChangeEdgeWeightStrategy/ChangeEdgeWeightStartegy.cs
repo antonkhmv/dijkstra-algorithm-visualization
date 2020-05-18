@@ -11,7 +11,7 @@ namespace Dijkstra_Algorithm_Visualization
             // The position of the mouse.   
             Point p = GetMousePosition(e, sender);
 
-            bool edgeFound = window.FindArrowInRange(out Edge edge, p, window.arrowHitBoxSize);
+            bool edgeFound = window.FindArrowInRange(out Edge edge, p, MainWindow.arrowHitBoxSize);
 
             // If the select button is pressed and the mouse is on the node.
             if (e.LeftButton == MouseButtonState.Pressed)

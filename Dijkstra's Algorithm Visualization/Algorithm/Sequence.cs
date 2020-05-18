@@ -128,7 +128,7 @@ namespace Dijkstra_Algorithm_Visualization
                 used[i] = false;
                 dist[i] = double.PositiveInfinity;
 
-                double value = i == window.selectedNode ? 0.0 : double.PositiveInfinity;
+                double value = i == window.SelectedNode ? 0.0 : double.PositiveInfinity;
 
                 window.graphCanvas.Children.Add(nodes[i].DistanceText);
                 nodes[i].Distance = value;

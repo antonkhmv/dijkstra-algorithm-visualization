@@ -20,9 +20,5 @@ namespace Dijkstra_Algorithm_Visualization
             currentStrategy.Border_MouseUp(this, sender, e);
         }
 
-        private void Window_KeyDown(object sender, KeyEventArgs e)
-        {   
-            currentStrategy.Window_KeyDown(this, sender, e);
-        }
     }
 }
